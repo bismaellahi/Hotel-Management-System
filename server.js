@@ -272,4 +272,5 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Server error' });
 });
 
-app.listen(3000, () => console.log('Hotel app running: http://localhost:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log('Hotel app running on port ' + PORT));

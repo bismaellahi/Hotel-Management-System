@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StayEase Admin</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>StayEase Admin</h1><nav><a href="index.html">Back to site</a></nav></header>
+<div class="wrap">
+<div id="login" class="card" style="max-width:420px;margin:40px auto"><h3>Admin login</h3>
+<label>Username</label><input id="au"><label>Password</label><input id="ap" type="password" onkeydown="if(event.key=='Enter')login()">
+<br><br><button class="btn" onclick="login()">Log in</button></div>
+<div id="panel" class="hide">
+<div class="tabs"><button class="btn" onclick="tab('dash')">Dashboard</button><button class="btn" onclick="tab('desk')">Check-in desk</button><button class="btn" onclick="tab('books')">Bookings</button><button class="btn" onclick="tab('rooms')">Rooms</button><button class="btn" onclick="tab('revs')">Reviews</button><button class="btn ghost" onclick="logout()">Log out</button></div>
+
+<div id="t-dash"><div class="grid" id="stats"></div>
+<div class="grid"><div class="card"><h3>Revenue by month</h3><div class="box"><canvas id="c1"></canvas></div></div>
+<div class="card"><h3>Bookings by room type</h3><div class="box"><canvas id="c2"></canvas></div></div></div>
+<div class="card"><h3>Latest bookings</h3><div style="overflow-x:auto"><table id="tbl"></table></div></div></div>
+
+<div id="t-desk" class="hide"><div class="card"><h3>Check-in desk</h3>
+<p>Scan the guest's QR code with a barcode scanner, or type the booking ID and press Enter.</p>
+<div class="row"><div><label>Booking ID</label><input id="bid" onkeydown="if(event.key=='Enter')lookup()"></div>
+<button class="btn" onclick="lookup()">Find booking</button></div></div>
+<div class="card hide" id="res"></div></div>
+
+<div id="t-books" class="hide"><div class="card"><h3>All bookings</h3><div style="overflow-x:auto"><table id="allB"></table></div></div></div>
+
+<div id="t-rooms" class="hide"><div class="card"><h3>Add a room</h3>
+<div class="row"><div><label>Room number</label><input id="rn"></div><div><label>Type</label><input id="rt"></div>
+<div><label>Price per night</label><input id="rp" type="number"></div><div><label>Capacity</label><input id="rc" type="number"></div>
+<button class="btn" onclick="addRoom()">Add room</button></div></div>
+<div class="card"><h3>Rooms</h3><div style="overflow-x:auto"><table id="rl"></table></div></div></div>
+
+<div id="t-revs" class="hide"><div class="card"><h3>All reviews</h3><div style="overflow-x:auto"><table id="rvAdmin"></table></div></div></div>
+</div></div>
+
+<script src="admin.js"></script>
+</body></html>

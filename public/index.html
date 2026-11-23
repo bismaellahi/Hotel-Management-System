@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StayEase</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#1b2430;--mut:#6b7785;--pri:#14284a;--acc:#2c5282;--bd:#dfe5ea}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--pri);color:#fff;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 60px}
+header h1{font-size:32px;margin:0}
+nav a{color:#fff;font-weight:700;margin-left:28px;cursor:pointer}
+.hero{background:linear-gradient(90deg,#14284a,#2c5282);color:#fff;text-align:center;padding:70px 20px}
+.hero h2{font-size:46px;margin:0 0 10px}.hero p{font-size:22px;margin:0}
+.wrap{max-width:1300px;margin:0 auto;padding:0 20px}
+.card{background:var(--card);border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.07);margin:20px 0}
+.card h3{margin:0 0 12px}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+label{display:block;font-size:15px;margin:8px 0 5px}
+input,select{padding:12px;border:1px solid #cfd7de;border-radius:8px;font-size:15px;width:100%;font-family:inherit}
+.row input,.row select{width:auto}
+.chk{display:flex;gap:8px;align-items:center;margin:4px 0}.chk input{width:auto}
+.btn{background:var(--pri);color:#fff;border:0;padding:13px 20px;border-radius:8px;cursor:pointer;font-size:15px}
+.btn.ghost{background:#e3e9ee;color:var(--ink)}.btn.sm{padding:6px 12px;font-size:13px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;margin-bottom:60px}
+.rc{background:var(--card);border-radius:14px;padding:26px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.rc h3{font-size:28px;margin:0 0 8px}.rc p{margin:6px 0;font-size:18px}.mut{color:var(--mut)}
+.tag{padding:3px 10px;border-radius:10px;font-size:13px;background:var(--bd)}.tag.no{background:#fde2e2;color:#a02020}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px 8px;border-bottom:1px solid var(--bd);text-align:left}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.stat{font-size:30px;font-weight:700;color:var(--acc)}.total{font-size:20px;font-weight:700;color:var(--acc)}
+.box{position:relative;height:260px}.hide{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:9;overflow:auto}
+#chatBtn{position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;font-size:24px;padding:0;background:var(--acc);z-index:5}
+#chat{position:fixed;right:20px;bottom:88px;width:330px;max-width:calc(100% - 40px);height:420px;display:flex;flex-direction:column;background:var(--card);border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.2);overflow:hidden;z-index:5}
+#chat h4{margin:0;padding:12px 14px;background:var(--pri);color:#fff}
+#msgs{flex:1;overflow:auto;padding:10px}
+.m{margin:6px 0;padding:8px 11px;border-radius:10px;max-width:88%;font-size:14px;white-space:pre-line}
+.bot{background:var(--bd)}.me{background:var(--pri);color:#fff;margin-left:auto}
+#chat form{display:flex;gap:6px;padding:8px;border-top:1px solid var(--bd)}
+@media(max-width:700px){header{padding:0 16px}.hero h2{font-size:32px}nav a{margin-left:14px}}
+</style></head>
+<body>
+<header><h1>StayEase</h1>
+<nav><a onclick="show('home')">Home</a><a onclick="show('home',1)">Rooms</a><a onclick="show('reviews')">Reviews</a><a onclick="show('admin')">Admin</a></nav></header>
+
+<div id="home">
+<div class="hero"><h2>Welcome to StayEase</h2><p>Comfortable rooms at the best prices</p></div>
+<div class="wrap">
+<div class="card"><h3>Check availability</h3>
+<div class="row"><div><label>Check-in</label><input type="date" id="sin"></div>
+<div><label>Check-out</label><input type="date" id="sout"></div>
+<button class="btn" onclick="render(true)">Search</button><button class="btn" onclick="clearS()">Show all</button></div></div>
+<div class="rooms" id="rooms"></div>
+</div></div>
+
+<div id="reviews" class="wrap hide">
+<div class="card"><h3>Write a review</h3>
+<p>Use the booking ID and phone number from your booking.</p>
+<div class="row"><div><label>Room</label><select id="rvRoom"></select></div>
+<div><label>Booking ID</label><input id="rvBid"></div>
+<div><label>Phone</label><input id="rvPhone"></div>
+<div><label>Rating</label><select id="rvStars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div></div>
+<label>Comment</label><input id="rvText"><br><br><button class="btn" onclick="sendReview()">Submit review</button></div>
+<div class="card"><h3>Guest reviews</h3><div id="rvList"></div></div></div>
+
+<div id="admin" class="wrap hide">
+<div id="login" class="card" style="max-width:420px;margin:40px auto"><h3>Admin login</h3>
+<label>Username</label><input id="au"><label>Password</label><input id="ap" type="password" onkeydown="if(event.key=='Enter')login()">
+<br><br><button class="btn" onclick="login()">Log in</button></div>
+<div id="panel" class="hide">
+<div class="tabs"><button class="btn" onclick="tab('dash')">Dashboard</button><button class="btn" onclick="tab('desk')">Check-in desk</button><button class="btn" onclick="tab('books')">Bookings</button><button class="btn" onclick="tab('rooms')">Rooms</button><button class="btn" onclick="tab('revs')">Reviews</button><button class="btn ghost" onclick="logout()">Log out</button></div>
+
+<div id="t-dash"><div class="grid" id="stats"></div>
+<div class="grid"><div class="card"><h3>Revenue by month</h3><div class="box"><canvas id="c1"></canvas></div></div>
+<div class="card"><h3>Bookings by room type</h3><div class="box"><canvas id="c2"></canvas></div></div></div>
+<div class="card"><h3>Latest bookings</h3><div style="overflow-x:auto"><table id="tbl"></table></div></div></div>
+
+<div id="t-desk" class="hide"><div class="card"><h3>Check-in desk</h3>
+<p>Scan the guest's QR code with a barcode scanner, or type the booking ID and press Enter.</p>
+<div class="row"><div><label>Booking ID</label><input id="bid" onkeydown="if(event.key=='Enter')lookup()"></div>
+<button class="btn" onclick="lookup()">Find booking</button></div></div>
+<div class="card hide" id="res"></div></div>
+
+<div id="t-books" class="hide"><div class="card"><h3>All bookings</h3><div style="overflow-x:auto"><table id="allB"></table></div></div></div>
+
+<div id="t-rooms" class="hide"><div class="card"><h3>Add a room</h3>
+<div class="row"><div><label>Room number</label><input id="rn"></div><div><label>Type</label><input id="rt"></div>
+<div><label>Price per night</label><input id="rp" type="number"></div><div><label>Capacity</label><input id="rc" type="number"></div>
+<button class="btn" onclick="addRoom()">Add room</button></div></div>
+<div class="card"><h3>Rooms</h3><div style="overflow-x:auto"><table id="rl"></table></div></div></div>
+
+<div id="t-revs" class="hide"><div class="card"><h3>All reviews</h3><div style="overflow-x:auto"><table id="rvAdmin"></table></div></div></div>
+</div></div>
+
+<div id="modal" class="modal hide"><div class="card" style="max-width:520px;width:100%">
+<div id="bf"><h3 id="mt"></h3>
+<label>Guest name</label><input id="name"><label>Phone</label><input id="phone">
+<div class="row"><div><label>Check-in</label><input type="date" id="in" onchange="mq()"></div>
+<div><label>Check-out</label><input type="date" id="out" onchange="mq()"></div></div>
+<label>Extra services</label><div id="svc"></div>
+<div id="quote" style="margin:14px 0"></div>
+<button class="btn" onclick="confirmBook()">Confirm booking</button> <button class="btn ghost" onclick="closeM()">Cancel</button></div>
+<div id="done" class="hide"><h3>Booking confirmed</h3><p id="doneTxt"></p><div id="qr"></div>
+<p>Show this QR code at the reception desk.</p><button class="btn" onclick="closeM()">Close</button></div>
+</div></div>
+
+<button class="btn" id="chatBtn" onclick="$('chat').classList.toggle('hide')" title="Chat with StayEase assistant">&#128172;</button>
+<div id="chat" class="hide"><h4>StayEase assistant</h4><div id="msgs"></div>
+<form onsubmit="return send()"><input id="cin" placeholder="Ask about rooms, prices, timings..." autocomplete="off"><button class="btn">Send</button></form></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const rs=n=>'Rs '+Number(n).toLocaleString();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+let tok=sessionStorage.getItem('tok')||'',allRooms=[],SVC=[],cur=null,c1,c2;
+
+async function api(url,opt={}){
+ const h={'Content-Type':'application/json'};if(tok)h['x-token']=tok;
+ const r=await fetch(url,{...opt,headers:h}),d=await r.json().catch(()=>({}));
+ if(r.status==401&&tok)logout();
+ if(!r.ok)throw new Error(d.error||'Request failed');
+ return d}
+const stars=r=>r.review_count?'\u2605 '+r.avg_rating+' ('+r.review_count+' review'+(r.review_count>1?'s':'')+')':'No reviews yet';
+const stage=b=>b.status=='cancelled'?'Cancelled':b.stage.replace('_','-');
+
+async function render(filter){
+ const i=$('sin').value,o=$('sout').value,ok=i&&o&&o>i;
+ if(filter&&!ok)return alert('Select a valid check-in and check-out date.');
+ try{
+  allRooms=await api('/api/rooms');
+  let avail=null,quotes={};
+  if(ok){avail=new Set((await api(`/api/rooms?checkin=${i}&checkout=${o}`)).map(r=>r.id));
+   await Promise.all(allRooms.filter(r=>avail.has(r.id)).map(async r=>{quotes[r.id]=(await api(`/api/quote?room_id=${r.id}&checkin=${i}&checkout=${o}`)).total}))}
+  const list=filter?allRooms.filter(r=>avail.has(r.id)):allRooms;
+  $('rooms').innerHTML=list.length?list.map(r=>{
+   const free=!ok||avail.has(r.id);
+   return `<div class="rc"><h3>Room ${esc(r.room_number)}</h3><p>${esc(r.type)} | Sleeps ${r.capacity}</p><p class="mut">${stars(r)}</p>
+   <p><b>${ok&&free?rs(quotes[r.id])+' total':'From '+rs(r.price)+' / night'}</b></p>`+
+   (free?`<button class="btn" onclick="openBook(${r.id})">Book now</button>`:'<span class="tag no">Booked for these dates</span>')+'</div>'}).join('')
+   :'<div class="card">No rooms are free for these dates. Try different dates.</div>'
+ }catch(e){$('rooms').innerHTML='<div class="card">'+esc(e.message)+'</div>'}}
+function clearS(){$('sin').value=$('sout').value='';render()}
+
+function openBook(id){cur=allRooms.find(r=>r.id==id);$('mt').textContent='Book Room '+cur.room_number+' ('+cur.type+')';
+ $('in').value=$('sin').value;$('out').value=$('sout').value;
+ $('svc').innerHTML=SVC.map(s=>`<label class="chk"><input type="checkbox" value="${s.id}" onchange="mq()">${esc(s.name)} (${rs(s.price)})</label>`).join('');
+ $('bf').classList.remove('hide');$('done').classList.add('hide');$('modal').classList.remove('hide');mq()}
+function closeM(){$('modal').classList.add('hide')}
+const picked=()=>[...document.querySelectorAll('#svc input:checked')].map(x=>x.value);
+async function mq(){const i=$('in').value,o=$('out').value;
+ if(!(i&&o&&o>i)){$('quote').textContent='Choose valid dates to see the live price.';return}
+ try{const q=await api(`/api/quote?room_id=${cur.id}&checkin=${i}&checkout=${o}`),ex=picked().reduce((s,x)=>s+SVC.find(v=>v.id==x).price,0);
+  $('quote').innerHTML='<table><tr><th>Night</th><th>Rate</th><th>Why</th></tr>'+q.rows.map(r=>`<tr><td>${r.date}</td><td>${rs(r.price)}</td><td>${r.note}</td></tr>`).join('')+
+  `</table><p>Extra services ${rs(ex)}</p><p class="total">Total ${rs(q.total+ex)}</p>`
+ }catch(e){$('quote').textContent=e.message}}
+async function confirmBook(){
+ const name=$('name').value.trim(),phone=$('phone').value.trim();
+ if(!name||!phone)return alert('Enter the guest name and phone number.');
+ try{const d=await api('/api/bookings',{method:'POST',body:JSON.stringify({room_id:cur.id,guest_name:name,phone,check_in:$('in').value,check_out:$('out').value,services:picked()})});
+  $('bf').classList.add('hide');$('done').classList.remove('hide');
+  $('doneTxt').innerHTML=`Booking ID <b>${d.booking_id}</b> for ${esc(name)}, Room ${esc(cur.room_number)}. Total ${rs(d.total)}. Keep your booking ID and phone number to write a review.`;
+  $('qr').innerHTML='';
+  if(typeof QRCode!='undefined')new QRCode($('qr'),{text:String(d.booking_id),width:150,height:150});
+  else $('qr').textContent='The QR library could not load. Check your internet connection.';
+  render()
+ }catch(e){alert(e.message)}}
+
+async function loadReviews(){
+ await render();
+ $('rvRoom').innerHTML=allRooms.map(r=>`<option value="${r.id}">Room ${esc(r.room_number)}</option>`).join('');
+ const l=await api('/api/reviews');
+ $('rvList').innerHTML=l.length?l.map(v=>`<p><b>${esc(v.guest_name)}</b> on Room ${esc(v.room_number)}: \u2605 ${v.rating}<br>${esc(v.comment)}</p>`).join(''):'<p>No reviews yet.</p>'}
+async function sendReview(){
+ try{const d=await api('/api/reviews',{method:'POST',body:JSON.stringify({room_id:+$('rvRoom').value,booking_id:+$('rvBid').value,phone:$('rvPhone').value,rating:+$('rvStars').value,comment:$('rvText').value})});
+  alert(d.message);$('rvText').value='';loadReviews()
+ }catch(e){alert(e.message)}}
+
+function login(){api('/api/admin/login',{method:'POST',body:JSON.stringify({username:$('au').value,password:$('ap').value})})
+ .then(d=>{tok=d.token;sessionStorage.setItem('tok',tok);$('ap').value='';adminInit()}).catch(e=>alert(e.message))}
+function logout(){tok='';sessionStorage.removeItem('tok');adminInit()}
+function adminInit(){$('login').classList.toggle('hide',!!tok);$('panel').classList.toggle('hide',!tok);if(tok)tab('dash')}
+function tab(n){['dash','desk','books','rooms','revs'].forEach(t=>$('t-'+t).classList.toggle('hide',t!=n));
+ ({dash,books,rooms:adminRooms,revs:adminRevs}[n]||(()=>{}))()}
+
+async function dash(){
+ const [bk,rm]=await Promise.all([api('/api/bookings'),api('/api/rooms')]);
+ const act=bk.filter(b=>b.status=='confirmed'),rev=act.reduce((s,b)=>s+b.total,0),inH=act.filter(b=>b.stage=='checked_in').length;
+ $('stats').innerHTML=[['Bookings',act.length],['Revenue',rs(rev)],['Guests in house',inH],['Occupancy now',rm.length?Math.round(inH/rm.length*100)+'%':'0%']].map(([a,b])=>`<div class="card">${a}<div class="stat">${b}</div></div>`).join('');
+ const mon={},rt={};act.forEach(b=>{const k=b.check_in.slice(0,7);mon[k]=(mon[k]||0)+b.total;rt[b.type]=(rt[b.type]||0)+1});
+ const ks=Object.keys(mon).sort();
+ if(typeof Chart!='undefined'){c1&&c1.destroy();c2&&c2.destroy();
+  c1=new Chart($('c1'),{type:'bar',data:{labels:ks,datasets:[{label:'Revenue (Rs)',data:ks.map(k=>mon[k]),backgroundColor:'#2c5282'}]},options:{maintainAspectRatio:false}});
+  c2=new Chart($('c2'),{type:'doughnut',data:{labels:Object.keys(rt),datasets:[{data:Object.values(rt),backgroundColor:['#14284a','#2c5282','#7aa2d4','#a9c1e0']}]},options:{maintainAspectRatio:false}})}
+ $('tbl').innerHTML='<tr><th>ID</th><th>Guest</th><th>Room</th><th>Stay</th><th>Total</th><th>Status</th></tr>'+
+ bk.slice(0,10).map(b=>`<tr><td>${b.id}</td><td>${esc(b.guest_name)}</td><td>${esc(b.room_number)}</td><td>${b.check_in} to ${b.check_out}</td><td>${rs(b.total)}</td><td><span class="tag">${stage(b)}</span></td></tr>`).join('')}
+
+async function lookup(){
+ const o=$('res');o.classList.remove('hide');
+ try{const b=await api('/api/bookings/'+encodeURIComponent($('bid').value.trim()));
+  const next=b.status=='confirmed'?(b.stage=='booked'?'Check in guest':b.stage=='checked_in'?'Check out guest':''):'';
+  o.innerHTML=`<table><tr><th>Guest</th><td>${esc(b.guest_name)}</td></tr><tr><th>Room</th><td>${esc(b.room_number)} (${esc(b.type)})</td></tr><tr><th>Stay</th><td>${b.check_in} to ${b.check_out}</td></tr><tr><th>Services</th><td>${esc(b.services||'None')}</td></tr><tr><th>Total</th><td>${rs(b.total)}</td></tr><tr><th>Status</th><td><span class="tag">${stage(b)}</span></td></tr></table><br>`+
+  (next?`<button class="btn" onclick="advance(${b.id})">${next}</button>`:'')
+ }catch(e){o.innerHTML='<p>'+esc(e.message)+'</p>'}}
+async function advance(id){try{await api(`/api/bookings/${id}/stage`,{method:'PUT'});lookup()}catch(e){alert(e.message)}}
+
+async function books(){
+ const bk=await api('/api/bookings');
+ $('allB').innerHTML='<tr><th>ID</th><th>Guest</th><th>Phone</th><th>Room</th><th>Stay</th><th>Services</th><th>Total</th><th>Status</th><th></th></tr>'+
+ bk.map(b=>`<tr><td>${b.id}</td><td>${esc(b.guest_name)}</td><td>${esc(b.phone)}</td><td>${esc(b.room_number)}</td><td>${b.check_in} to ${b.check_out}</td><td>${esc(b.services||'-')}</td><td>${rs(b.total)}</td><td><span class="tag">${stage(b)}</span></td><td>${b.status=='confirmed'&&b.stage=='booked'?`<button class="btn sm" onclick="cancelB(${b.id})">Cancel</button>`:''}</td></tr>`).join('')}
+async function cancelB(id){if(confirm('Cancel this booking?')){await api(`/api/bookings/${id}/cancel`,{method:'PUT'});books()}}
+
+async function adminRooms(){
+ const r=await api('/api/rooms');
+ $('rl').innerHTML='<tr><th>Room</th><th>Type</th><th>Price</th><th>Capacity</th><th></th></tr>'+
+ r.map(x=>`<tr><td>${esc(x.room_number)}</td><td>${esc(x.type)}</td><td>${rs(x.price)}</td><td>${x.capacity}</td><td><button class="btn sm" onclick="delRoom(${x.id})">Delete</button></td></tr>`).join('')}
+async function addRoom(){
+ try{await api('/api/rooms',{method:'POST',body:JSON.stringify({room_number:$('rn').value.trim(),type:$('rt').value.trim(),price:+$('rp').value,capacity:+$('rc').value})});
+  ['rn','rt','rp','rc'].forEach(i=>$(i).value='');adminRooms();render()
+ }catch(e){alert(e.message)}}
+async function delRoom(id){if(confirm('Delete this room and its bookings?')){await api('/api/rooms/'+id,{method:'DELETE'});adminRooms();render()}}
+
+async function adminRevs(){
+ const l=await api('/api/reviews');
+ $('rvAdmin').innerHTML='<tr><th>Guest</th><th>Room</th><th>Rating</th><th>Comment</th><th></th></tr>'+
+ l.map(v=>`<tr><td>${esc(v.guest_name)}</td><td>${esc(v.room_number)}</td><td>${v.rating}</td><td>${esc(v.comment)}</td><td><button class="btn sm" onclick="delRev(${v.id})">Delete</button></td></tr>`).join('')}
+async function delRev(id){if(confirm('Delete this review?')){await api('/api/reviews/'+id,{method:'DELETE'});adminRevs()}}
+
+function show(id,scroll){
+ ['home','reviews','admin'].forEach(s=>$(s).classList.toggle('hide',s!=id));
+ if(id=='admin')adminInit();
+ if(id=='reviews')loadReviews();
+ if(scroll)$('rooms').scrollIntoView({behavior:'smooth'});else window.scrollTo(0,0)}
+
+async function reply(t){t=t.toLowerCase();
+ if(/hi\b|hello|salam|assalam/.test(t))return 'Hello! I am the StayEase assistant. Ask me about rooms, prices, services or timings.';
+ if(/price|rate|cost|charge|rent/.test(t))return 'Base rates per night:\n'+allRooms.map(r=>'Room '+r.room_number+' ('+r.type+'): '+rs(r.price)).join('\n')+'\nRates go up on weekends and in peak season (Dec, Jan, Jun). Booking 30 or more days ahead gets a 10% discount.';
+ if(/available|vacant|free/.test(t)){const a=iso(new Date()),n=new Date();n.setDate(n.getDate()+1);
+  const f=await api(`/api/rooms?checkin=${a}&checkout=${iso(n)}`);
+  return f.length?'Rooms available tonight: '+f.map(r=>r.room_number+' ('+r.type+')').join(', '):'No rooms are available tonight.'}
+ if(/service|breakfast|laundry|pickup|extra/.test(t))return 'Extra services for your whole stay:\n'+SVC.map(s=>s.name+': '+rs(s.price)).join('\n');
+ if(/check.?in|check.?out|timing|time/.test(t))return 'Check-in starts at 2:00 PM and check-out is until 12:00 PM. Early check-in depends on availability.';
+ if(/wifi|parking|facilit/.test(t))return 'Free WiFi, secure parking, 24/7 room service and air conditioning in every room.';
+ if(/review|rating/.test(t))return 'Open the Reviews page and enter your booking ID and phone number to rate your room.';
+ if(/book|reserve/.test(t))return 'On the home page, choose your dates, click "Book now" on a room, pick any extra services and confirm. You will receive a QR code.';
+ if(/cancel|refund/.test(t))return 'To cancel a booking, please contact the reception with your booking ID.';
+ if(/qr|scan/.test(t))return 'You get a QR code when your booking is confirmed. Show it at the reception for a quick check-in.';
+ return 'Sorry, I did not understand that. Ask me about prices, available rooms, services, timings or facilities.'}
+function add(c,t){const d=document.createElement('div');d.className='m '+c;d.textContent=t;$('msgs').appendChild(d);$('msgs').scrollTop=1e9}
+function send(){const t=$('cin').value.trim();if(!t)return false;add('me',t);$('cin').value='';
+ reply(t).then(x=>add('bot',x)).catch(()=>add('bot','Sorry, I could not reach the server.'));return false}
+add('bot','Hello! I am the StayEase assistant. How can I help you?');
+
+$('sin').min=$('sout').min=iso(new Date());
+api('/api/services').then(s=>SVC=s).catch(()=>{});
+render();
+</script>
+</body></html>

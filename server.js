@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const db = new DatabaseSync(path.join(__dirname, 'hotel.db'));
+const db = new DatabaseSync(process.env.VERCEL ? '/tmp/hotel.db' : path.join(__dirname, 'hotel.db'));
 db.exec('PRAGMA foreign_keys = ON');
 
 db.exec(`
@@ -69,19 +69,29 @@ const SERVICES = [
 ];
 
 const ADMIN = { username: 'bisma', password: 'admin123' };
-const tokens = new Set();
+const SECRET = process.env.TOKEN_SECRET || 'hotel-demo-secret-change-me';
+const sign = exp => crypto.createHmac('sha256', SECRET).update(String(exp)).digest('hex');
+function makeToken() {
+  const exp = Date.now() + 12 * 3600 * 1000;
+  return exp + '.' + sign(exp);
+}
+function validToken(t) {
+  if (typeof t !== 'string') return false;
+  const [exp, sig] = t.split('.');
+  if (!exp || !sig || Number(exp) < Date.now()) return false;
+  const good = sign(exp);
+  return sig.length === good.length && crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(good));
+}
 
 function adminOnly(req, res, next) {
-  if (tokens.has(req.headers['x-token'])) return next();
+  if (validToken(req.headers['x-token'])) return next();
   res.status(401).json({ error: 'Admin login required' });
 }
 
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
   if (username === ADMIN.username && password === ADMIN.password) {
-    const token = crypto.randomBytes(16).toString('hex');
-    tokens.add(token);
-    return res.json({ token });
+    return res.json({ token: makeToken() });
   }
   res.status(401).json({ error: 'Wrong username or password' });
 });
@@ -272,5 +282,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Server error' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('Hotel app running on port ' + PORT));
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log('Hotel app running: http://localhost:' + PORT));
+}
+module.exports = app;

@@ -2,7 +2,6 @@
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Taj Mahal</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{--bg:#f7f4ee;--card:#fff;--ink:#17202e;--mut:#6c7684;--pri:#0f1f3d;--pri2:#1c3a6b;--gold:#c8963e;--gold2:#e8b960;--bd:#e6e1d6;--ok:#2e9e6b;--warn:#e0a030;--hot:#d9604c;--sh:0 6px 24px rgba(15,31,61,.09)}
@@ -78,6 +77,31 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 8px;b
 .dc{border:1.5px solid var(--bd);border-radius:16px;padding:16px;background:#fffdf8;animation:rise .5s both;animation-delay:calc(var(--i)*90ms)}
 .dc.top{border-color:var(--gold);background:linear-gradient(180deg,#fff8e8,#fffdf8)}.dc b.p{font-size:22px;color:var(--pri2)}
 .dc .bd{display:inline-block;background:var(--gold2);color:#3b2704;font-weight:700;font-size:12px;border-radius:20px;padding:3px 10px;margin-bottom:8px}
+.split{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff6e0;border:1.5px dashed var(--gold);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-weight:600;font-size:14px}.split select{width:auto;padding:7px 10px}.split b{color:var(--pri2);font-size:17px}
+.cdn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-weight:600;text-align:center}
+.map{background:radial-gradient(1.5px 1.5px at 8% 12%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 22% 30%,#fff 50%,transparent),radial-gradient(2px 2px at 40% 8%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 63% 20%,#fff 50%,transparent),radial-gradient(2px 2px at 82% 10%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 92% 34%,#fff 50%,transparent),linear-gradient(180deg,#071226,#16315c);color:#fff;border:0;overflow:hidden}
+.map .mut{color:#b6c3dc}.map label{color:#cfd9ee}.map input{background:#fff;color:var(--ink)}.mcount{font-weight:700;color:var(--gold2);padding-bottom:12px}
+#bld{display:flex;flex-direction:column;align-items:center;margin-top:10px}
+#bld .roof{width:min(300px,70%);display:block;margin-bottom:-2px}
+.flr{display:flex;align-items:stretch;width:min(760px,100%);background:#1d3b6e;border-bottom:5px solid #2c5282;margin-top:3px}
+.fl{width:54px;flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#8da2c6;background:#16305c;text-align:center}
+.fr{flex:1;display:flex;gap:12px;justify-content:center;padding:14px 10px;flex-wrap:wrap}
+.win{width:118px;min-height:84px;border-radius:60px 60px 6px 6px/46px 46px 6px 6px;padding:20px 6px 8px;text-align:center;font-size:12px;line-height:1.3;transition:.25s;border:1px solid transparent}
+.win b{display:block;font-size:17px}
+.win.on{background:linear-gradient(#fff1c2,#e8b960);color:#3b2704;box-shadow:0 0 22px rgba(232,185,96,.75);cursor:pointer;animation:glow 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*.6s)}
+.win.on:hover{transform:translateY(-5px) scale(1.05)}
+.win.off{background:#0d1a33;color:#6f82a6;border-color:#2c4470}
+@keyframes glow{0%,100%{box-shadow:0 0 14px rgba(232,185,96,.55)}50%{box-shadow:0 0 30px rgba(255,214,120,.95)}}
+.gnd{width:min(800px,102%);height:26px;background:#2c5282;border-radius:0 0 8px 8px;display:flex;justify-content:center;align-items:flex-end;margin-top:3px}
+.gnd i{width:46px;height:20px;background:#0d1a33;border-radius:30px 30px 0 0}
+.pk{border:1.5px solid var(--bd);border-radius:20px;padding:22px;background:#fff;box-shadow:var(--sh);transition:.3s;animation:rise .6s both;animation-delay:calc(var(--i)*90ms)}
+.pk:hover{transform:translateY(-6px);border-color:var(--gold)}.pk h3{margin:6px 0 4px;font-size:22px}.pk .pt{display:inline-block;background:var(--pri);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:3px 11px}
+.pk ul{margin:10px 0;padding-left:18px;color:#4b5565;font-size:14px;line-height:1.7}.pk .pp{font-size:20px;font-weight:700;color:var(--pri2);margin:8px 0 12px}
+.marq{overflow:hidden;padding:6px 0 60px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:16px;width:max-content;animation:scrl 45s linear infinite}.track:hover{animation-play-state:paused}.track.still{animation:none;margin:0 auto}
+@keyframes scrl{to{transform:translateX(-50%)}}
+.rvc{width:290px;background:#fff;border-radius:18px;padding:18px;box-shadow:var(--sh);border:1px solid var(--bd);font-size:14px;line-height:1.5}
+.rvc .st{color:var(--gold);font-size:16px;letter-spacing:2px}.rvc b{display:block;margin-top:10px}.rvc small{color:var(--mut)}
 .rcpt{background:#fff;border:1px solid var(--bd);border-top:6px solid var(--gold);border-radius:14px;padding:22px;margin:4px 0 14px}
 .rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--bd);padding-bottom:12px;margin-bottom:12px}
 .rl{display:flex;align-items:center;gap:8px;font-size:22px;color:var(--pri)}.rt{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut)}
@@ -159,9 +183,16 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 <div><label>Guests</label><select id="dg"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
 <button class="btn gold" onclick="findDeals()">Find best deals</button></div>
 <div id="deals" class="dgrid"></div></div>
+<div class="card map"><h3>Live Hotel Map</h3>
+<p class="mut" style="margin:0 0 8px">Our hotel at night. A lit window is a free room, a dark window is booked. Click a lit window to book it.</p>
+<div class="row"><div><label>Night of</label><input type="date" id="md" onchange="drawMap()"></div><div id="mcount" class="mcount"></div></div>
+<div id="bld"></div></div>
+<h2 class="sec-t">Stay packages</h2><p class="sec-s">Ready-made bundles. One click picks the room and the extras for you.</p>
+<div class="dgrid" id="packs"></div>
 <h2 class="sec-t">Find your perfect room</h2><p class="sec-s">Who is travelling? We'll show the rooms that fit.</p>
 <div class="moods" id="moods"></div>
 <div class="rooms" id="rooms"></div>
+<div id="wall" class="hide"><h2 class="sec-t" style="margin-top:0">What our guests say</h2><p class="sec-s">Real reviews from verified bookings.</p><div class="marq"><div class="track" id="trk"></div></div></div>
 </div></div>
 
 <div id="reviews" class="wrap hide">
@@ -215,11 +246,12 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 <div><label>Check-out</label><input type="date" id="out" onchange="mq()"></div></div>
 <label>Extra services</label><div id="svc"></div>
 <div id="quote" style="margin:14px 0"></div>
+<div class="split"><span>Split the bill between</span><select id="sp" onchange="spl()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>guests</span><b id="spv"></b></div>
 <button class="btn gold" onclick="confirmBook()">Confirm booking</button> <button class="btn ghost" onclick="closeM()">Cancel</button></div>
 <div id="done" class="hide"><div class="rcpt" id="rcpt">
 <div class="rh"><div class="rl"><svg viewBox="0 0 40 40" width="30" height="30" fill="#c8963e" aria-hidden="true"><circle cx="20" cy="4.5" r="1.8"/><path d="M11 24 C11 14 16 9 20 9 C24 9 29 14 29 24 Z"/><rect x="9" y="24" width="22" height="10"/><rect x="3" y="14" width="3.6" height="20" rx="1.4"/><rect x="33.4" y="14" width="3.6" height="20" rx="1.4"/><path d="M3 14 Q4.8 9 6.6 14 Z"/><path d="M33.4 14 Q35.2 9 37 14 Z"/><rect x="1" y="34" width="38" height="3" rx="1"/></svg><b>Taj Mahal</b></div><div class="rt">BOOKING RECEIPT</div></div>
 <div class="rmeta"><div><span>Booking ID</span><b id="rId"></b></div><div><span>Issued on</span><b id="rDate"></b></div><div><span>Status</span><b style="color:#1c6b45">Confirmed</b></div></div>
-<div id="doneTxt"></div>
+<div id="cdn"></div><div id="doneTxt"></div>
 <div class="rq"><div id="qr"></div><p>Show this QR code at the reception desk for quick check-in.<br>Check-in from 2:00 PM &middot; Check-out until 12:00 PM.<br>Keep your booking ID and phone number to write a review.</p></div>
 <div class="rf">Thank you for choosing Taj Mahal. We look forward to hosting you.</div>
 </div>
@@ -255,7 +287,7 @@ const rs=n=>'Rs '+Number(n).toLocaleString();
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const addDay=s=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+1);return iso(d)};
-let tok=sessionStorage.getItem('tok')||'',allRooms=[],SVC=[],cur=null,c1,c2,mood='all',lastBook=null,heroDone=false;
+let lastTot=0,tok=sessionStorage.getItem('tok')||'',allRooms=[],SVC=[],cur=null,c1,c2,mood='all',lastBook=null,heroDone=false;
 
 async function api(url,opt={}){
  const h={'Content-Type':'application/json'};if(tok)h['x-token']=tok;
@@ -291,7 +323,7 @@ async function render(filter){
  const i=$('sin').value,o=$('sout').value,ok=i&&o&&o>i;
  if(filter&&!ok)return alert('Select a valid check-in and check-out date.');
  try{
-  allRooms=await api('/api/rooms');heroStats();
+  allRooms=await api('/api/rooms');heroStats();drawPacks();
   let avail=null,quotes={};
   if(ok){avail=new Set((await api(`/api/rooms?checkin=${i}&checkout=${o}`)).map(r=>r.id));
    await Promise.all(allRooms.filter(r=>avail.has(r.id)).map(async r=>{quotes[r.id]=(await api(`/api/quote?room_id=${r.id}&checkin=${i}&checkout=${o}`)).total}))}
@@ -328,25 +360,25 @@ async function loadCal(){
 function pickDay(d){$('in').value=d;if(!$('out').value||$('out').value<=d)$('out').value=addDay(d);
  document.querySelectorAll('.cd.sel').forEach(x=>x.classList.remove('sel'));$('d'+d)&&$('d'+d).classList.add('sel');mq()}
 async function mq(){const i=$('in').value,o=$('out').value;
- if(!(i&&o&&o>i)){$('quote').textContent='Choose valid dates to see the live price.';return}
+ if(!(i&&o&&o>i)){$('quote').textContent='Choose valid dates to see the live price.';lastTot=0;spl();return}
  try{const q=await api(`/api/quote?room_id=${cur.id}&checkin=${i}&checkout=${o}`),ex=picked().reduce((s,x)=>s+SVC.find(v=>v.id==x).price,0);
   $('quote').innerHTML='<table><tr><th>Night</th><th>Rate</th><th>Why</th></tr>'+q.rows.map(r=>`<tr><td>${r.date}</td><td>${rs(r.price)}</td><td>${r.note}</td></tr>`).join('')+
   `</table><p>Extra services ${rs(ex)}</p><p class="total">Total ${rs(q.total+ex)}</p>`
+;lastTot=q.total+ex;spl()
  }catch(e){$('quote').textContent=e.message}}
+function spl(){const n=+$('sp').value;$('spv').textContent=n>1&&lastTot?'= '+rs(Math.ceil(lastTot/n))+' each':''}
 async function confirmBook(){
  const name=$('name').value.trim(),phone=$('phone').value.trim();
  if(!name||!phone)return alert('Enter the guest name and phone number.');
  try{const sv=picked().map(x=>SVC.find(v=>v.id==x).name);
   const d=await api('/api/bookings',{method:'POST',body:JSON.stringify({room_id:cur.id,guest_name:name,phone,check_in:$('in').value,check_out:$('out').value,services:picked()})});
   $('bf').classList.add('hide');$('done').classList.remove('hide');
-  const nights=d.nights,svcs=picked().map(x=>SVC.find(v=>v.id==x)),roomChg=d.total-d.services_total,fd=x=>new Date(x+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-  $('rId').textContent='#'+d.booking_id;$('rDate').textContent=new Date().toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'});
+  const gn=+$('sp').value,days=Math.round((new Date($('in').value+'T00:00:00')-new Date(new Date().toDateString()))/86400000),nights=d.nights,svcs=picked().map(x=>SVC.find(v=>v.id==x)),roomChg=d.total-d.services_total,fd=x=>new Date(x+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  $('cdn').innerHTML=days>0?`<div class="cdn">Your stay starts in ${days} day${days>1?'s':''}</div>`:days==0?'<div class="cdn">Your stay starts today. Welcome!</div>':'';$('rId').textContent='#'+d.booking_id;$('rDate').textContent=new Date().toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'});
   $('doneTxt').innerHTML=`<table><tr><th>Guest</th><td>${esc(name)}</td></tr><tr><th>Phone</th><td>${esc(phone)}</td></tr><tr><th>Room</th><td>Room ${esc(cur.room_number)} (${esc(cur.type)}), sleeps ${cur.capacity}</td></tr><tr><th>Check-in</th><td>${fd($('in').value)}</td></tr><tr><th>Check-out</th><td>${fd($('out').value)}</td></tr><tr><th>Duration</th><td>${nights} night${nights>1?'s':''}</td></tr></table>
-  <div class="sub">CHARGES</div><table><tr><td>Room (${nights} night${nights>1?'s':''}, dynamic rate)</td><td class="r">${rs(roomChg)}</td></tr>${svcs.map(v=>`<tr><td>${esc(v.name)}</td><td class="r">${rs(v.price)}</td></tr>`).join('')}<tr class="tt"><th>Total payable</th><th class="r">${rs(d.total)}</th></tr></table>`;
-  $('qr').innerHTML='';
-  if(typeof QRCode!='undefined')new QRCode($('qr'),{text:String(d.booking_id),width:140,height:140});
-  else $('qr').textContent='The QR library could not load. Check your internet connection.';
-  render()
+  <div class="sub">CHARGES</div><table><tr><td>Room (${nights} night${nights>1?'s':''}, dynamic rate)</td><td class="r">${rs(roomChg)}</td></tr>${svcs.map(v=>`<tr><td>${esc(v.name)}</td><td class="r">${rs(v.price)}</td></tr>`).join('')}<tr class="tt"><th>Total payable</th><th class="r">${rs(d.total)}</th></tr>${gn>1?`<tr><td>Split between ${gn} guests</td><td class="r"><b>${rs(Math.ceil(d.total/gn))} each</b></td></tr>`:''}</table>`;
+  $('qr').innerHTML=qrSvg(String(d.booking_id));
+  render();drawMap()
  }catch(e){alert(e.message)}}
 
 /* ---------- reviews ---------- */
@@ -357,7 +389,7 @@ async function loadReviews(){
  $('rvList').innerHTML=l.length?l.map(v=>`<p><b>${esc(v.guest_name)}</b> on Room ${esc(v.room_number)}: ★ ${v.rating}<br>${esc(v.comment)}</p>`).join(''):'<p>No reviews yet.</p>'}
 async function sendReview(){
  try{const d=await api('/api/reviews',{method:'POST',body:JSON.stringify({room_id:+$('rvRoom').value,booking_id:+$('rvBid').value,phone:$('rvPhone').value,rating:+$('rvStars').value,comment:$('rvText').value})});
-  alert(d.message);$('rvText').value='';loadReviews()
+  alert(d.message);$('rvText').value='';loadReviews();loadWall()
  }catch(e){alert(e.message)}}
 
 /* ---------- admin ---------- */
@@ -417,6 +449,100 @@ function show(id,scroll){
  if(id=='reviews')loadReviews();
  if(scroll)$('rooms').scrollIntoView({behavior:'smooth',block:'center'});else window.scrollTo(0,0)}
 
+/* ---------- built-in QR code generator (no internet needed) ---------- */
+function qrSvg(text){
+ const ECC=[0,10,16,26,18,24,16],BLK=[0,1,1,2,2,2,4];
+ const raw=v=>{let r=(16*v+128)*v+64;if(v>=2){const a=Math.floor(v/7)+2;r-=(25*a-10)*a-55}return r};
+ const bytes=[...new TextEncoder().encode(text)];
+ let ver=1;
+ for(;ver<=6;ver++){if(bytes.length*8+12<=(Math.floor(raw(ver)/8)-ECC[ver]*BLK[ver])*8)break}
+ if(ver>6)return '';
+ const cap=Math.floor(raw(ver)/8)-ECC[ver]*BLK[ver];
+ const bits=[];const put=(v,n)=>{for(let i=n-1;i>=0;i--)bits.push((v>>>i)&1)};
+ put(4,4);put(bytes.length,8);bytes.forEach(b=>put(b,8));
+ put(0,Math.min(4,cap*8-bits.length));while(bits.length%8)bits.push(0);
+ const data=[];for(let i=0;i<bits.length;i+=8){let b=0;for(let j=0;j<8;j++)b=b<<1|bits[i+j];data.push(b)}
+ for(let p=0xEC;data.length<cap;p^=0xEC^0x11)data.push(p);
+ const mul=(x,y)=>{let z=0;for(let i=7;i>=0;i--){z=(z<<1)^((z>>>7)*0x11D);z^=((y>>>i)&1)*x}return z&255};
+ const rs=(d,deg)=>{const g=new Array(deg).fill(0);g[deg-1]=1;let root=1;
+  for(let i=0;i<deg;i++){for(let j=0;j<deg;j++){g[j]=mul(g[j],root);if(j+1<deg)g[j]^=g[j+1]}root=mul(root,2)}
+  const r=new Array(deg).fill(0);
+  for(const b of d){const f=b^r.shift();r.push(0);for(let i=0;i<deg;i++)r[i]^=mul(g[i],f)}return r};
+ const nb=BLK[ver],el=ECC[ver],rc=Math.floor(raw(ver)/8),ns=nb-rc%nb,sl=Math.floor(rc/nb),blocks=[];
+ for(let i=0,k=0;i<nb;i++){const dat=data.slice(k,k+sl-el+(i<ns?0:1));k+=dat.length;const e=rs(dat,el);if(i<ns)dat.push(0);blocks.push(dat.concat(e))}
+ const all=[];for(let i=0;i<blocks[0].length;i++)blocks.forEach((b,j)=>{if(i!=sl-el||j>=ns)all.push(b[i])});
+ const N=ver*4+17,fn=Array.from({length:N},()=>new Array(N).fill(false)),M=Array.from({length:N},()=>new Array(N).fill(false));
+ const setFn=(x,y,d)=>{M[y][x]=d;fn[y][x]=true};
+ for(let i=0;i<N;i++){setFn(6,i,i%2==0);setFn(i,6,i%2==0)}
+ const finder=(x,y)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const d=Math.max(Math.abs(dx),Math.abs(dy)),xx=x+dx,yy=y+dy;if(xx>=0&&xx<N&&yy>=0&&yy<N)setFn(xx,yy,d!=2&&d!=4)}};
+ finder(3,3);finder(N-4,3);finder(3,N-4);
+ if(ver>1){const na=Math.floor(ver/7)+2,step=Math.ceil((ver*4+4)/(na*2-2))*2,pos=[6];for(let p=N-7;pos.length<na;p-=step)pos.splice(1,0,p);
+  pos.forEach((x,i)=>pos.forEach((y,j)=>{if((i==0&&j==0)||(i==0&&j==na-1)||(i==na-1&&j==0))return;
+   for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)setFn(x+dx,y+dy,Math.max(Math.abs(dx),Math.abs(dy))!=1)}))}
+ const fmt=(m,mask)=>{const d=mask;let r=d;for(let i=0;i<10;i++)r=(r<<1)^((r>>>9)*0x537);const b=((d<<10)|r)^0x5412,g=i=>((b>>>i)&1)==1;
+  for(let i=0;i<=5;i++)m[i][8]=g(i);m[7][8]=g(6);m[8][8]=g(7);m[8][7]=g(8);for(let i=9;i<15;i++)m[8][14-i]=g(i);
+  for(let i=0;i<8;i++)m[8][N-1-i]=g(i);for(let i=8;i<15;i++)m[N-15+i][8]=g(i);m[N-8][8]=true};
+ fmt(M,0);for(let y=0;y<N;y++)for(let x=0;x<N;x++){}
+ // mark format areas as function modules
+ for(let i=0;i<9;i++){fn[i][8]=true;fn[8][i]=true}for(let i=0;i<8;i++){fn[8][N-1-i]=true;fn[N-1-i][8]=true}fn[N-8][8]=true;
+ let i=0;
+ for(let right=N-1;right>=1;right-=2){if(right==6)right=5;
+  for(let v=0;v<N;v++)for(let j=0;j<2;j++){const x=right-j,up=((right+1)&2)==0,y=up?N-1-v:v;
+   if(!fn[y][x]&&i<all.length*8){M[y][x]=((all[i>>>3]>>>(7-(i&7)))&1)==1;i++}}}
+ const cond=[(x,y)=>(x+y)%2==0,(x,y)=>y%2==0,(x,y)=>x%3==0,(x,y)=>(x+y)%3==0,(x,y)=>(Math.floor(x/3)+Math.floor(y/2))%2==0,(x,y)=>x*y%2+x*y%3==0,(x,y)=>(x*y%2+x*y%3)%2==0,(x,y)=>((x+y)%2+x*y%3)%2==0];
+ const pen=m=>{let p=0,dark=0;
+  for(let a=0;a<N;a++)for(const row of [0,1]){let run=1;for(let b=1;b<N;b++){const c=row?m[b][a]:m[a][b],pv=row?m[b-1][a]:m[a][b-1];if(c==pv){run++;if(run==5)p+=3;else if(run>5)p++}else run=1}}
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(m[y][x])dark++;if(x<N-1&&y<N-1&&m[y][x]==m[y][x+1]&&m[y][x]==m[y+1][x]&&m[y][x]==m[y+1][x+1])p+=3}
+  return p+(Math.ceil(Math.abs(dark*20-N*N*10)/(N*N))-1)*10};
+ let best=null,bp=1e9;
+ for(let mk=0;mk<8;mk++){const m=M.map(r=>r.slice());
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!fn[y][x]&&cond[mk](x,y))m[y][x]=!m[y][x];
+  fmt(m,mk);const p=pen(m);if(p<bp){bp=p;best=m}}
+ let d='';for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(best[y][x])d+=`M${x+4},${y+4}h1v1h-1z`;
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${N+8} ${N+8}" width="140" height="140" shape-rendering="crispEdges" role="img" aria-label="Booking QR code"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#0f1f3d"/></svg>`}
+
+/* ---------- Packages ---------- */
+const PACKS=[
+ {name:'Honeymoon Escape',tag:'Couples',svc:['breakfast','pickup'],note:'A cosy room for two with breakfast and airport pickup.',pick:r=>r.capacity>=2,pref:r=>/double|deluxe/i.test(r.type)},
+ {name:'Family Fun',tag:'Families',svc:['breakfast','extrabed'],note:'Space for 3 or more, with breakfast and an extra bed.',pick:r=>r.capacity>=3,pref:()=>true},
+ {name:'Business Express',tag:'Work trips',svc:['laundry','breakfast'],note:'A quiet single room with laundry and breakfast.',pick:r=>r.capacity<=1||/single/i.test(r.type),pref:()=>true}];
+function packRoom(p){const l=allRooms.filter(p.pick).sort((a,b)=>a.price-b.price);return l.find(p.pref)||l[0]}
+function drawPacks(){
+ if(!allRooms.length||!SVC.length)return;
+ $('packs').innerHTML=PACKS.map((p,i)=>{const r=packRoom(p),sv=p.svc.map(id=>SVC.find(v=>v.id==id)).filter(Boolean);
+  if(!r)return '';
+  return `<div class="pk" style="--i:${i}"><span class="pt">${p.tag}</span><h3>${p.name}</h3><p class="mut" style="margin:0">${p.note}</p>
+  <ul><li>Room ${esc(r.room_number)} (${esc(r.type)}), sleeps ${r.capacity}</li>${sv.map(v=>`<li>${esc(v.name)} (${rs(v.price)})</li>`).join('')}</ul>
+  <div class="pp">${rs(r.price)} <small class="mut" style="font-weight:500;font-size:14px">/ night + extras</small></div>
+  <button class="btn gold" onclick="bookPack(${i})">Book this package</button></div>`}).join('')}
+function bookPack(i){const p=PACKS[i],r=packRoom(p);if(!r)return;openBook(r.id);
+ document.querySelectorAll('#svc input').forEach(x=>{x.checked=p.svc.includes(x.value)});mq()}
+
+/* ---------- Guest wall ---------- */
+async function loadWall(){
+ try{const l=await api('/api/reviews');if(!l.length){$('wall').classList.add('hide');return}
+  const card=v=>`<div class="rvc"><div class="st">${'\u2605'.repeat(v.rating)}</div><p style="margin:8px 0 0">${esc(v.comment)}</p><b>${esc(v.guest_name)}</b><small>Room ${esc(v.room_number)}</small></div>`;
+  const h=l.slice(0,12).map(card).join('');
+  $('trk').className='track'+(l.length<4?' still':'');$('trk').innerHTML=l.length<4?h:h+h;
+  $('wall').classList.remove('hide')
+ }catch(e){}}
+
+/* ---------- Live Hotel Map ---------- */
+const ROOF='<svg class="roof" viewBox="0 -34 300 154" aria-hidden="true"><g fill="#2c5282"><rect x="110" y="40" width="80" height="80"/><path d="M118 44 C118 8 140 -2 150 -2 C160 -2 182 8 182 44 Z" fill="#3a66a8"/><rect x="148" y="-22" width="4" height="22" fill="#e8b960"/><rect x="40" y="52" width="14" height="68" rx="3"/><rect x="246" y="52" width="14" height="68" rx="3"/><path d="M37 52 C37 32 57 32 57 52 Z"/><path d="M243 52 C243 32 263 32 263 52 Z"/><rect x="54" y="92" width="56" height="28"/><rect x="190" y="92" width="56" height="28"/></g><circle cx="150" cy="-18" r="5" fill="#e8b960"/></svg>';
+async function drawMap(){
+ const d=$('md').value||iso(new Date());
+ try{
+  if(!allRooms.length)allRooms=await api('/api/rooms');
+  const free=new Set((await api(`/api/rooms?checkin=${d}&checkout=${addDay(d)}`)).map(r=>r.id));
+  const fl={};allRooms.forEach(r=>{const f=parseInt(String(r.room_number).trim()[0])||1;(fl[f]=fl[f]||[]).push(r)});
+  let n=0;
+  $('bld').innerHTML=ROOF+Object.keys(fl).map(Number).sort((a,b)=>b-a).map(f=>`<div class="flr"><div class="fl">Floor ${f}</div><div class="fr">`+fl[f].map(r=>{
+   const on=free.has(r.id);if(on)n++;
+   return on?`<div class="win on" style="--i:${n}" onclick="bookDeal(${r.id},'${d}','${addDay(d)}')" title="Click to book"><b>${esc(r.room_number)}</b>${esc(r.type)}<br>${rs(r.price)}</div>`
+    :`<div class="win off"><b>${esc(r.room_number)}</b>${esc(r.type)}<br>Booked</div>`}).join('')+'</div></div>').join('')+'<div class="gnd"><i></i></div>';
+  $('mcount').textContent=n+' of '+allRooms.length+' rooms free on this night'
+ }catch(e){$('bld').innerHTML='<p class="mut">'+esc(e.message)+'</p>'}}
+
 /* ---------- Deal Finder ---------- */
 const calCache={};
 async function findDeals(){
@@ -474,9 +600,9 @@ function toggleChat(){const b=$('bub');if(b)b.remove();$('chat').classList.toggl
 add('bot','Hello! I am Bello, your Taj Mahal bellboy. How can I help you today?');
 setTimeout(()=>{const b=$('bub');if(b)b.style.display='none'},9000);
 
-$('sin').min=$('sout').min=iso(new Date());
-drawMoods();
-api('/api/services').then(s=>SVC=s).catch(()=>{});
+$('sin').min=$('sout').min=$('md').min=iso(new Date());$('md').value=iso(new Date());
+drawMoods();drawMap();
+api('/api/services').then(s=>{SVC=s;drawPacks()}).catch(()=>{});loadWall();
 render();
 </script>
 </body></html>

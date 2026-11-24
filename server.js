@@ -170,6 +170,22 @@ app.get('/api/quote', (req, res) => {
   res.json(pricing(room, checkin, checkout));
 });
 
+app.get('/api/calendar', (req, res) => {
+  const room = db.prepare('SELECT * FROM rooms WHERE id = ?').get(req.query.room_id);
+  if (!room) return res.status(404).json({ error: 'Room not found' });
+  const out = [];
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 30; i++) {
+    const next = new Date(d); next.setDate(next.getDate() + 1);
+    const from = fmt(d), to = fmt(next);
+    const booked = !!db.prepare(`SELECT id FROM bookings WHERE room_id = ? AND status = 'confirmed'
+      AND check_in < ? AND check_out > ?`).get(room.id, to, from);
+    out.push({ date: from, price: pricing(room, from, to).total, booked });
+    d.setDate(d.getDate() + 1);
+  }
+  res.json(out);
+});
+
 app.post('/api/bookings', (req, res) => {
   const { room_id, guest_name, phone, check_in, check_out, services } = req.body;
   if (!room_id || !guest_name || !phone || !check_in || !check_out)

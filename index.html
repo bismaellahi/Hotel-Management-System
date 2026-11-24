@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taj Mahal</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f7f4ee;--card:#fff;--ink:#17202e;--mut:#6c7684;--pri:#0f1f3d;--pri2:#1c3a6b;--gold:#c8963e;--gold2:#e8b960;--bd:#e6e1d6;--ok:#2e9e6b;--warn:#e0a030;--hot:#d9604c;--sh:0 6px 24px rgba(15,31,61,.09)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+h1,h2,h3,h4{font-family:inherit}
+header{position:sticky;top:0;z-index:30;background:rgba(15,31,61,.93);backdrop-filter:blur(10px);color:#fff;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px}
+header h1{font-size:28px;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px}header h1 b{font-weight:700}header h1 span{color:var(--gold2)}
+nav a{color:#e9edf5;font-weight:600;margin-left:6px;cursor:pointer;padding:9px 16px;border-radius:30px;font-size:15px;transition:.2s;display:inline-block}
+nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:90px 20px 300px;background:linear-gradient(135deg,#0b1830 0%,#173463 55%,#2a4f86 100%)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at 50% 40%,#000 20%,transparent 75%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:float 9s ease-in-out infinite}
+.b1{width:340px;height:340px;background:#c8963e;left:-80px;top:-60px}
+.b2{width:300px;height:300px;background:#3b82f6;right:-60px;bottom:-40px;animation-delay:-4s}
+.b3{width:200px;height:200px;background:#e8b960;right:25%;top:-70px;animation-delay:-2s;opacity:.3}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-26px)}}
+.hero>*{position:relative}.hero .taj{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(780px,96%);height:auto;pointer-events:none}
+.pill{display:inline-block;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:600;margin-bottom:20px}
+.hero h2{font-size:clamp(34px,6vw,64px);line-height:1.08;margin:0 auto 16px;max-width:820px}
+.hero h2 em{font-style:normal;color:var(--gold2)}
+.hero p{font-size:19px;margin:0 auto;max-width:560px;color:#d5def0}
+.hstats{display:flex;justify-content:center;gap:44px;margin-top:38px;flex-wrap:wrap}
+.hstats b{display:block;font-size:34px;color:var(--gold2)}.hstats span{font-size:14px;color:#c4d0e6}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.search{margin:-74px auto 0;position:relative;z-index:2}
+.card{background:var(--card);border-radius:20px;padding:26px;box-shadow:var(--sh);margin:20px 0;border:1px solid rgba(230,225,214,.7)}
+.card h3{margin:0 0 14px;font-size:22px}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+label{display:block;font-size:14px;font-weight:600;margin:10px 0 6px;color:#3d4756}
+input,select{padding:13px 14px;border:1.5px solid #dcd6c8;border-radius:12px;font-size:15px;width:100%;font-family:inherit;background:#fff;transition:.2s}
+input:focus,select:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px rgba(200,150,62,.18)}
+.row input,.row select{width:auto}
+.chk{display:flex;gap:8px;align-items:center;margin:4px 0;font-weight:500}.chk input{width:auto}
+.btn{background:var(--pri);color:#fff;border:0;padding:13px 22px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;font-family:inherit;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,31,61,.25)}
+.btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#2b1d05}
+.btn.ghost{background:#ece7da;color:var(--ink)}.btn.sm{padding:7px 13px;font-size:13px;border-radius:9px}
+.sec-t{text-align:center;margin:46px 0 6px;font-size:34px}.sec-s{text-align:center;color:var(--mut);margin:0 0 20px}
+.moods{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 26px}
+.mood{border:1.5px solid var(--bd);background:#fff;padding:10px 18px;border-radius:30px;cursor:pointer;font-weight:600;font-size:14px;font-family:inherit;transition:.2s}
+.mood:hover{border-color:var(--gold)}.mood.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:26px;margin-bottom:70px}
+.rc{background:var(--card);border-radius:22px;overflow:hidden;box-shadow:var(--sh);border:1px solid rgba(230,225,214,.7);transition:.3s;animation:rise .6s both;animation-delay:calc(var(--i)*80ms)}
+.rc:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(15,31,61,.18)}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.rv{position:relative;height:150px;display:flex;align-items:center;justify-content:center;color:#fff;overflow:hidden}
+.rv::after{content:attr(data-n);position:absolute;right:14px;bottom:-26px;font-size:96px;font-weight:700;opacity:.14}
+.g1{background:linear-gradient(135deg,#1f8a8a,#2bb3a0)}.g2{background:linear-gradient(135deg,#25508f,#4a86d6)}.g3{background:linear-gradient(135deg,#5a3d8f,#8f6bd0)}.g4{background:linear-gradient(135deg,#9a6a1a,#e0a838)}
+.rv svg{width:78px;fill:rgba(255,255,255,.92);transition:.4s}.rc:hover .rv svg{transform:scale(1.12) rotate(-3deg)}
+.rv .tag{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(4px);font-weight:600}
+.rv .fit{position:absolute;right:14px;top:14px;background:var(--gold2);color:#3b2704;font-weight:700;padding:4px 11px;border-radius:20px;font-size:12px}
+.rb{padding:20px 22px 24px}
+.rb h3{font-size:24px;margin:0 0 4px}.rb p{margin:6px 0}.mut{color:var(--mut)}
+.am{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}.am span{font-size:12px;background:#f4efe3;border-radius:20px;padding:4px 10px;font-weight:600;color:#6a5a33}
+.price{font-size:20px;font-weight:700;color:var(--pri);margin:6px 0 14px}.price small{font-weight:500;color:var(--mut);font-size:14px}
+.tag{padding:4px 11px;border-radius:12px;font-size:13px;background:var(--bd);font-weight:600;display:inline-block}.tag.no{background:#fde2e2;color:#a02020}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 8px;border-bottom:1px solid var(--bd);text-align:left}th{color:#4b5565}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.stat{font-size:32px;font-weight:700;color:var(--pri2)}.total{font-size:22px;font-weight:700;color:var(--pri2)}
+.box{position:relative;height:260px}.hide{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(10,18,36,.55);backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;padding:24px 14px;z-index:60;overflow:auto}
+.modal .card{animation:rise .35s both}
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;margin:6px 0 6px}
+.cd{border-radius:10px;padding:6px 2px;text-align:center;cursor:pointer;font-size:11px;line-height:1.25;border:2px solid transparent;transition:.15s;user-select:none}
+.cd b{display:block;font-size:15px}.cd:hover{transform:scale(1.08)}
+.cd.lo{background:#dff3e8;color:#1c6b45}.cd.mid{background:#fdf0d2;color:#8a5d09}.cd.hi{background:#fbdcd6;color:#9a3426}
+.cd.bk{background:#eee;color:#aaa;text-decoration:line-through;cursor:not-allowed}.cd.best{border-color:var(--gold)}.cd.sel{outline:3px solid var(--pri)}
+.leg{font-size:12px;color:var(--mut);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.deal{border-top:4px solid var(--gold)}.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+.dc{border:1.5px solid var(--bd);border-radius:16px;padding:16px;background:#fffdf8;animation:rise .5s both;animation-delay:calc(var(--i)*90ms)}
+.dc.top{border-color:var(--gold);background:linear-gradient(180deg,#fff8e8,#fffdf8)}.dc b.p{font-size:22px;color:var(--pri2)}
+.dc .bd{display:inline-block;background:var(--gold2);color:#3b2704;font-weight:700;font-size:12px;border-radius:20px;padding:3px 10px;margin-bottom:8px}
+.split{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff6e0;border:1.5px dashed var(--gold);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-weight:600;font-size:14px}.split select{width:auto;padding:7px 10px}.split b{color:var(--pri2);font-size:17px}
+.cdn{background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-weight:600;text-align:center}
+.map{background:radial-gradient(1.5px 1.5px at 8% 12%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 22% 30%,#fff 50%,transparent),radial-gradient(2px 2px at 40% 8%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 63% 20%,#fff 50%,transparent),radial-gradient(2px 2px at 82% 10%,#fff 50%,transparent),radial-gradient(1.5px 1.5px at 92% 34%,#fff 50%,transparent),linear-gradient(180deg,#071226,#16315c);color:#fff;border:0;overflow:hidden}
+.map .mut{color:#b6c3dc}.map label{color:#cfd9ee}.map input{background:#fff;color:var(--ink)}.mcount{font-weight:700;color:var(--gold2);padding-bottom:12px}
+#bld{display:flex;flex-direction:column;align-items:center;margin-top:10px}
+#bld .roof{width:min(300px,70%);display:block;margin-bottom:-2px}
+.flr{display:flex;align-items:stretch;width:min(760px,100%);background:#1d3b6e;border-bottom:5px solid #2c5282;margin-top:3px}
+.fl{width:54px;flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#8da2c6;background:#16305c;text-align:center}
+.fr{flex:1;display:flex;gap:12px;justify-content:center;padding:14px 10px;flex-wrap:wrap}
+.win{width:118px;min-height:84px;border-radius:60px 60px 6px 6px/46px 46px 6px 6px;padding:20px 6px 8px;text-align:center;font-size:12px;line-height:1.3;transition:.25s;border:1px solid transparent}
+.win b{display:block;font-size:17px}
+.win.on{background:linear-gradient(#fff1c2,#e8b960);color:#3b2704;box-shadow:0 0 22px rgba(232,185,96,.75);cursor:pointer;animation:glow 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*.6s)}
+.win.on:hover{transform:translateY(-5px) scale(1.05)}
+.win.off{background:#0d1a33;color:#6f82a6;border-color:#2c4470}
+@keyframes glow{0%,100%{box-shadow:0 0 14px rgba(232,185,96,.55)}50%{box-shadow:0 0 30px rgba(255,214,120,.95)}}
+.gnd{width:min(800px,102%);height:26px;background:#2c5282;border-radius:0 0 8px 8px;display:flex;justify-content:center;align-items:flex-end;margin-top:3px}
+.gnd i{width:46px;height:20px;background:#0d1a33;border-radius:30px 30px 0 0}
+.rcpt{background:#fff;border:1px solid var(--bd);border-top:6px solid var(--gold);border-radius:14px;padding:22px;margin:4px 0 14px}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--bd);padding-bottom:12px;margin-bottom:12px}
+.rl{display:flex;align-items:center;gap:8px;font-size:22px;color:var(--pri)}.rt{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut)}
+.rmeta{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:12px}.rmeta span{display:block;font-size:12px;color:var(--mut)}.rmeta b{font-size:16px}
+.rcpt table th{width:36%;color:var(--mut);font-weight:600}.rcpt .sub{margin:16px 0 4px;font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--mut)}
+.rcpt td.r,.rcpt th.r{text-align:right}.rcpt tr.tt td,.rcpt tr.tt th{background:#fff6e0;font-size:18px;color:var(--pri);border-bottom:0}
+.rq{display:flex;gap:16px;align-items:center;margin-top:16px;flex-wrap:wrap}.rq p{margin:0;flex:1;min-width:180px;font-size:13px;color:var(--mut);line-height:1.6}
+.rf{margin-top:16px;padding-top:12px;border-top:1px dashed var(--bd);text-align:center;font-size:13px;color:var(--mut)}
+footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;margin-top:40px;font-size:14px}footer b{color:#fff;font-size:22px}
+/* mascot */
+#mw{position:fixed;right:14px;bottom:6px;z-index:40;width:112px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#mw svg{width:100%;display:block;overflow:visible}
+.dancer{transform-origin:60px 150px;animation:bop .7s ease-in-out infinite}
+.armL{transform-origin:32px 76px;animation:aL .7s ease-in-out infinite}
+.armR{transform-origin:88px 76px;animation:aR .7s ease-in-out infinite;animation-delay:-.35s}
+.legL{transform-origin:50px 110px;animation:lL .7s ease-in-out infinite}
+.legR{transform-origin:70px 110px;animation:lR .7s ease-in-out infinite}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+.sh{transform-origin:60px 164px;animation:shd .7s ease-in-out infinite}
+.talking .dancer,.talking .armL,.talking .armR,.talking .legL,.talking .legR,.talking .sh{animation-duration:.38s}
+@keyframes bop{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-9px) rotate(4deg)}}
+@keyframes aL{0%,100%{transform:rotate(18deg)}50%{transform:rotate(150deg)}}
+@keyframes aR{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(-150deg)}}
+@keyframes lL{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(14deg)}}
+@keyframes lR{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-9deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+@keyframes shd{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.8)}}
+#bub{position:absolute;right:92px;bottom:118px;width:178px;background:#fff;border-radius:16px;padding:10px 13px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.18);animation:pop .5s both}
+#bub::after{content:"";position:absolute;right:-8px;bottom:14px;border:8px solid transparent;border-left-color:#fff;border-right:0}
+@keyframes pop{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:none}}
+#chat{position:fixed;right:18px;bottom:164px;width:340px;max-width:calc(100% - 36px);height:440px;display:flex;flex-direction:column;background:var(--card);border-radius:20px;box-shadow:0 14px 44px rgba(10,18,36,.3);overflow:hidden;z-index:45;animation:pop .3s both}
+#chat h4{margin:0;padding:14px 16px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;display:flex;justify-content:space-between;align-items:center;font-size:17px}
+#chat h4 span{cursor:pointer;opacity:.8}
+#msgs{flex:1;overflow:auto;padding:12px;background:#faf8f3}
+.m{margin:7px 0;padding:9px 13px;border-radius:14px;max-width:88%;font-size:14px;white-space:pre-line;line-height:1.4}
+.bot{background:#fff;border:1px solid var(--bd);border-bottom-left-radius:4px}.me{background:var(--pri);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 10px 0;background:#faf8f3}
+.chips button{border:1px solid var(--gold);background:#fff;color:#7a5712;border-radius:20px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.chips button:hover{background:var(--gold2)}
+.dots span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:#9aa4b3;animation:dt 1s infinite}.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+#chat form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--bd);background:#faf8f3}
+#chat form input{padding:10px 12px}
+@media(max-width:700px){header{padding:0 14px}nav a{padding:8px 10px;font-size:14px}.hstats{gap:24px}#mw{width:84px}#bub{right:72px;bottom:88px;width:150px}#chat{bottom:128px;height:380px}.hero{padding:70px 16px 230px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media print{@page{margin:14mm}body *{visibility:hidden}#done,#done *{visibility:visible}.modal{position:absolute;inset:auto;left:0;top:0;width:100%;background:#fff;padding:0;display:block;backdrop-filter:none}.modal>.card{box-shadow:none;border:0;padding:0;margin:0;max-width:none!important}#done .btn{display:none}.rcpt{border:1px solid #ccc;border-top:6px solid #c8963e;max-width:560px;margin:0 auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head>
+<body>
+<header><h1><svg viewBox="0 0 40 40" width="34" height="34" fill="#e8b960" aria-hidden="true"><path d="M20 3 L20 8"/><circle cx="20" cy="4.5" r="1.8"/><path d="M11 24 C11 14 16 9 20 9 C24 9 29 14 29 24 Z"/><rect x="9" y="24" width="22" height="10"/><rect x="3" y="14" width="3.6" height="20" rx="1.4"/><rect x="33.4" y="14" width="3.6" height="20" rx="1.4"/><path d="M3 14 Q4.8 9 6.6 14 Z"/><path d="M33.4 14 Q35.2 9 37 14 Z"/><rect x="1" y="34" width="38" height="3" rx="1"/></svg><b>Taj <span>Mahal</span></b></h1>
+<nav><a onclick="show('home')">Home</a><a onclick="show('home',1)">Rooms</a><a onclick="show('reviews')">Reviews</a><a onclick="show('admin')">Admin</a></nav></header>
+
+<div id="home">
+<div class="hero"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><svg class="taj" viewBox="0 -20 800 280" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><g fill="rgba(255,255,255,.13)">
+<rect x="60" y="238" width="680" height="22"/><rect x="130" y="228" width="540" height="12"/>
+<rect x="290" y="130" width="220" height="100"/>
+<path d="M310 135 C310 50 360 20 400 20 C440 20 490 50 490 135 Z"/>
+<path d="M300 130 C300 104 336 104 336 130 Z"/><path d="M464 130 C464 104 500 104 500 130 Z"/>
+<rect x="206" y="168" width="84" height="62"/><rect x="510" y="168" width="84" height="62"/>
+<path d="M206 168 C206 150 248 150 248 168 Z"/><path d="M552 168 C552 150 594 150 594 168 Z"/>
+<rect x="150" y="70" width="22" height="160" rx="3"/><rect x="628" y="70" width="22" height="160" rx="3"/>
+<path d="M146 70 C146 40 176 40 176 70 Z"/><path d="M624 70 C624 40 654 40 654 70 Z"/>
+<rect x="158" y="30" width="6" height="12"/><rect x="636" y="30" width="6" height="12"/>
+<rect x="397" y="-8" width="6" height="30"/></g>
+<path d="M370 230 V162 Q400 118 430 162 V230 Z" fill="rgba(0,0,0,.28)"/>
+<path d="M230 230 V190 Q248 174 266 190 V230 Z" fill="rgba(0,0,0,.22)"/><path d="M534 230 V190 Q552 174 570 190 V230 Z" fill="rgba(0,0,0,.22)"/>
+<circle cx="400" cy="-12" r="7" fill="#e8b960"/><circle cx="403" cy="-14" r="6" fill="#16315c"/></svg>
+<span class="pill">Smart prices &middot; Instant QR check-in</span>
+<h2>A palace of <em>comfort</em> awaits you</h2>
+<p>Elegant rooms, honest prices and a bellboy who never stops dancing.</p>
+<div class="hstats"><div><b id="hs1">0</b><span>Rooms</span></div><div><b id="hs2">-</b><span>Guest rating</span></div><div><b id="hs3">-</b><span>Rooms from / night</span></div></div></div>
+<div class="wrap">
+<div class="card search"><h3>Check availability</h3>
+<div class="row"><div><label>Check-in</label><input type="date" id="sin"></div>
+<div><label>Check-out</label><input type="date" id="sout"></div>
+<button class="btn gold" onclick="render(true)">Search</button><button class="btn ghost" onclick="clearS()">Show all</button></div></div>
+<div class="card deal"><h3>Deal Finder: cheapest stay in the next 30 days</h3>
+<p class="mut" style="margin:0 0 6px">Tell us how long and how many guests. We scan every room and every date for the lowest price.</p>
+<div class="row"><div><label>Nights</label><select id="dn"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>7</option></select></div>
+<div><label>Guests</label><select id="dg"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+<button class="btn gold" onclick="findDeals()">Find best deals</button></div>
+<div id="deals" class="dgrid"></div></div>
+<div class="card map"><h3>Live Hotel Map</h3>
+<p class="mut" style="margin:0 0 8px">Our hotel at night. A lit window is a free room, a dark window is booked. Click a lit window to book it.</p>
+<div class="row"><div><label>Night of</label><input type="date" id="md" onchange="drawMap()"></div><div id="mcount" class="mcount"></div></div>
+<div id="bld"></div></div>
+<h2 class="sec-t">Find your perfect room</h2><p class="sec-s">Who is travelling? We'll show the rooms that fit.</p>
+<div class="moods" id="moods"></div>
+<div class="rooms" id="rooms"></div>
+</div></div>
+
+<div id="reviews" class="wrap hide">
+<div class="card" style="margin-top:36px"><h3>Write a review</h3>
+<p class="mut">Use the booking ID and phone number from your booking.</p>
+<div class="row"><div><label>Room</label><select id="rvRoom"></select></div>
+<div><label>Booking ID</label><input id="rvBid"></div>
+<div><label>Phone</label><input id="rvPhone"></div>
+<div><label>Rating</label><select id="rvStars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div></div>
+<label>Comment</label><input id="rvText"><br><br><button class="btn gold" onclick="sendReview()">Submit review</button></div>
+<div class="card"><h3>Guest reviews</h3><div id="rvList"></div></div></div>
+
+<div id="admin" class="wrap hide">
+<div id="login" class="card" style="max-width:420px;margin:50px auto"><h3>Admin login</h3>
+<label>Username</label><input id="au"><label>Password</label><input id="ap" type="password" onkeydown="if(event.key=='Enter')login()">
+<br><br><button class="btn" onclick="login()">Log in</button></div>
+<div id="panel" class="hide">
+<div class="tabs"><button class="btn" onclick="tab('dash')">Dashboard</button><button class="btn" onclick="tab('desk')">Check-in desk</button><button class="btn" onclick="tab('books')">Bookings</button><button class="btn" onclick="tab('rooms')">Rooms</button><button class="btn" onclick="tab('revs')">Reviews</button><button class="btn ghost" onclick="logout()">Log out</button></div>
+
+<div id="t-dash"><div class="grid" id="stats"></div>
+<div class="grid"><div class="card"><h3>Revenue by month</h3><div class="box"><canvas id="c1"></canvas></div></div>
+<div class="card"><h3>Bookings by room type</h3><div class="box"><canvas id="c2"></canvas></div></div></div>
+<div class="card"><h3>Latest bookings</h3><div style="overflow-x:auto"><table id="tbl"></table></div></div></div>
+
+<div id="t-desk" class="hide"><div class="card"><h3>Check-in desk</h3>
+<p>Scan the guest's QR code with a barcode scanner, or type the booking ID and press Enter.</p>
+<div class="row"><div><label>Booking ID</label><input id="bid" onkeydown="if(event.key=='Enter')lookup()"></div>
+<button class="btn" onclick="lookup()">Find booking</button></div></div>
+<div class="card hide" id="res"></div></div>
+
+<div id="t-books" class="hide"><div class="card"><h3>All bookings</h3><div style="overflow-x:auto"><table id="allB"></table></div></div></div>
+
+<div id="t-rooms" class="hide"><div class="card"><h3>Add a room</h3>
+<div class="row"><div><label>Room number</label><input id="rn"></div><div><label>Type</label><input id="rt"></div>
+<div><label>Price per night</label><input id="rp" type="number"></div><div><label>Capacity</label><input id="rc" type="number"></div>
+<button class="btn" onclick="addRoom()">Add room</button></div></div>
+<div class="card"><h3>Rooms</h3><div style="overflow-x:auto"><table id="rl"></table></div></div></div>
+
+<div id="t-revs" class="hide"><div class="card"><h3>All reviews</h3><div style="overflow-x:auto"><table id="rvAdmin"></table></div></div></div>
+</div></div>
+
+<footer><b>Taj Mahal</b><br>Smart hotel booking &middot; Free WiFi &middot; 24/7 service</footer>
+
+<div id="modal" class="modal hide"><div class="card" style="max-width:600px;width:100%">
+<div id="bf"><h3 id="mt"></h3>
+<label>Guest name</label><input id="name"><label>Phone</label><input id="phone">
+<label>Price calendar <span class="mut" style="font-weight:500">(tap a day to pick it)</span></label>
+<div class="leg"><span><i style="background:#dff3e8"></i>Cheap</span><span><i style="background:#fdf0d2"></i>Normal</span><span><i style="background:#fbdcd6"></i>Pricey</span><span><i style="background:#eee"></i>Booked</span><span>&#9733; Best deal</span></div>
+<div id="cal" class="cal"></div><div id="calNote" class="mut" style="font-size:13px"></div>
+<div class="row"><div><label>Check-in</label><input type="date" id="in" onchange="mq()"></div>
+<div><label>Check-out</label><input type="date" id="out" onchange="mq()"></div></div>
+<label>Extra services</label><div id="svc"></div>
+<div id="quote" style="margin:14px 0"></div>
+<div class="split"><span>Split the bill between</span><select id="sp" onchange="spl()"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>guests</span><b id="spv"></b></div>
+<button class="btn gold" onclick="confirmBook()">Confirm booking</button> <button class="btn ghost" onclick="closeM()">Cancel</button></div>
+<div id="done" class="hide"><div class="rcpt" id="rcpt">
+<div class="rh"><div class="rl"><svg viewBox="0 0 40 40" width="30" height="30" fill="#c8963e" aria-hidden="true"><circle cx="20" cy="4.5" r="1.8"/><path d="M11 24 C11 14 16 9 20 9 C24 9 29 14 29 24 Z"/><rect x="9" y="24" width="22" height="10"/><rect x="3" y="14" width="3.6" height="20" rx="1.4"/><rect x="33.4" y="14" width="3.6" height="20" rx="1.4"/><path d="M3 14 Q4.8 9 6.6 14 Z"/><path d="M33.4 14 Q35.2 9 37 14 Z"/><rect x="1" y="34" width="38" height="3" rx="1"/></svg><b>Taj Mahal</b></div><div class="rt">BOOKING RECEIPT</div></div>
+<div class="rmeta"><div><span>Booking ID</span><b id="rId"></b></div><div><span>Issued on</span><b id="rDate"></b></div><div><span>Status</span><b style="color:#1c6b45">Confirmed</b></div></div>
+<div id="cdn"></div><div id="doneTxt"></div>
+<div class="rq"><div id="qr"></div><p>Show this QR code at the reception desk for quick check-in.<br>Check-in from 2:00 PM &middot; Check-out until 12:00 PM.<br>Keep your booking ID and phone number to write a review.</p></div>
+<div class="rf">Thank you for choosing Taj Mahal. We look forward to hosting you.</div>
+</div>
+<button class="btn gold" onclick="window.print()">Print / Save as PDF</button> <button class="btn ghost" onclick="closeM()">Close</button></div>
+</div></div>
+
+<div id="mw" onclick="toggleChat()" title="Chat with Bello">
+<div id="bub">Hi! I'm <b>Bello</b>. Ask me about rooms, prices or deals!</div>
+<svg viewBox="0 0 120 170" aria-label="Bello the dancing bellboy">
+<ellipse class="sh" cx="60" cy="164" rx="30" ry="5" fill="rgba(0,0,0,.2)"/>
+<g class="dancer">
+<g class="legL"><rect x="44" y="108" width="12" height="42" rx="6" fill="#0f1f3d"/><ellipse cx="46" cy="152" rx="12" ry="6" fill="#1a1a1a"/></g>
+<g class="legR"><rect x="64" y="108" width="12" height="42" rx="6" fill="#0f1f3d"/><ellipse cx="74" cy="152" rx="12" ry="6" fill="#1a1a1a"/></g>
+<rect x="34" y="66" width="52" height="52" rx="14" fill="#8c2f39"/>
+<rect x="58" y="68" width="4" height="48" fill="#c8963e"/>
+<circle cx="52" cy="82" r="2.6" fill="#e8b960"/><circle cx="52" cy="96" r="2.6" fill="#e8b960"/><circle cx="68" cy="82" r="2.6" fill="#e8b960"/><circle cx="68" cy="96" r="2.6" fill="#e8b960"/>
+<g class="armL"><rect x="26" y="70" width="12" height="40" rx="6" fill="#8c2f39"/><circle cx="32" cy="111" r="7" fill="#f4cfa8"/></g>
+<g class="armR"><rect x="82" y="70" width="12" height="40" rx="6" fill="#8c2f39"/><circle cx="88" cy="111" r="7" fill="#f4cfa8"/></g>
+<circle cx="60" cy="42" r="26" fill="#f4cfa8"/>
+<circle cx="45" cy="50" r="5" fill="#f2a58f" opacity=".55"/><circle cx="75" cy="50" r="5" fill="#f2a58f" opacity=".55"/>
+<ellipse class="eye" cx="51" cy="42" rx="2.8" ry="3.6" fill="#2a1a12"/><ellipse class="eye" cx="69" cy="42" rx="2.8" ry="3.6" fill="#2a1a12"/>
+<path d="M50 52 Q60 63 70 52" fill="#fff" stroke="#2a1a12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="36" y="9" width="48" height="19" rx="7" fill="#8c2f39"/><rect x="36" y="21" width="48" height="5" fill="#c8963e"/><circle cx="60" cy="9" r="4" fill="#e8b960"/>
+</g></svg></div>
+
+<div id="chat" class="hide"><h4>Bello &middot; Taj Mahal assistant <span onclick="event.stopPropagation();toggleChat()">&#10005;</span></h4><div id="msgs"></div>
+<div class="chips" id="chips"></div>
+<form onsubmit="return send()"><input id="cin" placeholder="Ask in English or Roman Urdu..." autocomplete="off"><button class="btn sm">Send</button></form></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const rs=n=>'Rs '+Number(n).toLocaleString();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const addDay=s=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+1);return iso(d)};
+let lastTot=0,tok=sessionStorage.getItem('tok')||'',allRooms=[],SVC=[],cur=null,c1,c2,mood='all',lastBook=null,heroDone=false;
+
+async function api(url,opt={}){
+ const h={'Content-Type':'application/json'};if(tok)h['x-token']=tok;
+ const r=await fetch(url,{...opt,headers:h}),d=await r.json().catch(()=>({}));
+ if(r.status==401&&tok)logout();
+ if(!r.ok)throw new Error(d.error||'Request failed');
+ return d}
+const stars=r=>r.review_count?'★ '+r.avg_rating+' ('+r.review_count+' review'+(r.review_count>1?'s':'')+')':'No reviews yet';
+const stage=b=>b.status=='cancelled'?'Cancelled':b.stage.replace('_','-');
+
+/* ---------- mood filter ---------- */
+const MOODS={
+ all:{label:'All rooms',fn:()=>true},
+ solo:{label:'Solo',fn:r=>r.capacity<=1||/single/i.test(r.type)},
+ couple:{label:'Couple',fn:r=>r.capacity==2||/double/i.test(r.type)},
+ family:{label:'Family',fn:r=>r.capacity>=3},
+ luxury:{label:'Luxury',fn:r=>/suite|deluxe/i.test(r.type)||r.price>=12000}};
+function drawMoods(){$('moods').innerHTML=Object.entries(MOODS).map(([k,v])=>`<button class="mood ${k==mood?'on':''}" onclick="setMood('${k}')">${v.label}</button>`).join('')}
+function setMood(k){mood=k;drawMoods();render()}
+
+/* ---------- rooms ---------- */
+const tone=t=>{const k=(t||'').toLowerCase();return /single/.test(k)?'g1':/double/.test(k)?'g2':/deluxe/.test(k)?'g3':/suite/.test(k)?'g4':'g'+(1+k.length%4)};
+const BED='<svg viewBox="0 0 64 40"><rect x="4" y="17" width="56" height="14" rx="3"/><rect x="4" y="7" width="14" height="12" rx="4"/><rect x="22" y="12" width="16" height="8" rx="3" opacity=".75"/><rect x="4" y="30" width="4" height="7"/><rect x="56" y="30" width="4" height="7"/></svg>';
+function countUp(el,to,fmt){const t0=performance.now();(function f(t){const p=Math.min((t-t0)/900,1);el.textContent=fmt(to*p);if(p<1)requestAnimationFrame(f)})(t0)}
+function heroStats(){
+ if(!allRooms.length||heroDone)return;heroDone=true;
+ countUp($('hs1'),allRooms.length,v=>Math.round(v));
+ const rated=allRooms.filter(r=>r.review_count);
+ if(rated.length)countUp($('hs2'),rated.reduce((s,r)=>s+r.avg_rating,0)/rated.length,v=>'★ '+v.toFixed(1));else $('hs2').textContent='New';
+ countUp($('hs3'),Math.min(...allRooms.map(r=>r.price)),v=>rs(Math.round(v)))}
+
+async function render(filter){
+ const i=$('sin').value,o=$('sout').value,ok=i&&o&&o>i;
+ if(filter&&!ok)return alert('Select a valid check-in and check-out date.');
+ try{
+  allRooms=await api('/api/rooms');heroStats();
+  let avail=null,quotes={};
+  if(ok){avail=new Set((await api(`/api/rooms?checkin=${i}&checkout=${o}`)).map(r=>r.id));
+   await Promise.all(allRooms.filter(r=>avail.has(r.id)).map(async r=>{quotes[r.id]=(await api(`/api/quote?room_id=${r.id}&checkin=${i}&checkout=${o}`)).total}))}
+  let list=filter?allRooms.filter(r=>avail.has(r.id)):allRooms;
+  list=list.filter(MOODS[mood].fn);
+  $('rooms').innerHTML=list.length?list.map((r,n)=>{
+   const free=!ok||avail.has(r.id);
+   return `<div class="rc" style="--i:${n}"><div class="rv ${tone(r.type)}" data-n="${esc(r.room_number)}">${BED}<span class="tag">${esc(r.type)}</span>${mood!='all'?'<span class="fit">Great match</span>':''}</div>
+   <div class="rb"><h3>Room ${esc(r.room_number)}</h3><p class="mut">Sleeps ${r.capacity} &middot; ${stars(r)}</p>
+   <div class="am"><span>WiFi</span><span>AC</span><span>Parking</span></div>
+   <div class="price">${ok&&free?rs(quotes[r.id])+' <small>total</small>':'<small>From</small> '+rs(r.price)+' <small>/ night</small>'}</div>`+
+   (free?`<button class="btn gold" onclick="openBook(${r.id})">Book now</button>`:'<span class="tag no">Booked for these dates</span>')+'</div></div>'}).join('')
+   :'<div class="card" style="grid-column:1/-1">No rooms match. Try different dates or another traveller type.</div>'
+ }catch(e){$('rooms').innerHTML='<div class="card">'+esc(e.message)+'</div>'}}
+function clearS(){$('sin').value=$('sout').value='';mood='all';drawMoods();render()}
+
+/* ---------- booking ---------- */
+function openBook(id){cur=allRooms.find(r=>r.id==id);$('mt').textContent='Book Room '+cur.room_number+' ('+cur.type+')';
+ $('in').value=$('sin').value;$('out').value=$('sout').value;
+ $('svc').innerHTML=SVC.map(s=>`<label class="chk"><input type="checkbox" value="${s.id}" onchange="mq()">${esc(s.name)} (${rs(s.price)})</label>`).join('');
+ $('bf').classList.remove('hide');$('done').classList.add('hide');$('modal').classList.remove('hide');mq();loadCal()}
+function closeM(){$('modal').classList.add('hide')}
+const picked=()=>[...document.querySelectorAll('#svc input:checked')].map(x=>x.value);
+async function loadCal(){
+ $('cal').innerHTML='<span class="mut">Loading prices...</span>';$('calNote').textContent='';
+ try{const c=await api('/api/calendar?room_id='+cur.id),free=c.filter(x=>!x.booked);
+  const mn=free.length?Math.min(...free.map(x=>x.price)):0,mx=free.length?Math.max(...free.map(x=>x.price)):0,span=mx-mn;
+  const best=free.find(x=>x.price==mn);
+  $('cal').innerHTML=c.map(x=>{
+   const d=new Date(x.date+'T00:00:00'),lv=!span||x.price<=mn+span/3?'lo':x.price<=mn+span*2/3?'mid':'hi';
+   return `<div class="cd ${x.booked?'bk':lv} ${!x.booked&&x.price==mn?'best':''}" ${x.booked?'':`onclick="pickDay('${x.date}')"`} id="d${x.date}">${d.toLocaleDateString('en',{weekday:'short'})}<b>${d.getDate()}</b>${x.booked?'Booked':(x.price/1000).toFixed(1)+'k'+(x.price==mn?' ★':'')}</div>`}).join('');
+  if(best)$('calNote').textContent='Cheapest night: '+new Date(best.date+'T00:00:00').toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'})+' at '+rs(best.price)+'.'
+ }catch(e){$('cal').innerHTML='';$('calNote').textContent=e.message}}
+function pickDay(d){$('in').value=d;if(!$('out').value||$('out').value<=d)$('out').value=addDay(d);
+ document.querySelectorAll('.cd.sel').forEach(x=>x.classList.remove('sel'));$('d'+d)&&$('d'+d).classList.add('sel');mq()}
+async function mq(){const i=$('in').value,o=$('out').value;
+ if(!(i&&o&&o>i)){$('quote').textContent='Choose valid dates to see the live price.';lastTot=0;spl();return}
+ try{const q=await api(`/api/quote?room_id=${cur.id}&checkin=${i}&checkout=${o}`),ex=picked().reduce((s,x)=>s+SVC.find(v=>v.id==x).price,0);
+  $('quote').innerHTML='<table><tr><th>Night</th><th>Rate</th><th>Why</th></tr>'+q.rows.map(r=>`<tr><td>${r.date}</td><td>${rs(r.price)}</td><td>${r.note}</td></tr>`).join('')+
+  `</table><p>Extra services ${rs(ex)}</p><p class="total">Total ${rs(q.total+ex)}</p>`
+;lastTot=q.total+ex;spl()
+ }catch(e){$('quote').textContent=e.message}}
+function spl(){const n=+$('sp').value;$('spv').textContent=n>1&&lastTot?'= '+rs(Math.ceil(lastTot/n))+' each':''}
+async function confirmBook(){
+ const name=$('name').value.trim(),phone=$('phone').value.trim();
+ if(!name||!phone)return alert('Enter the guest name and phone number.');
+ try{const sv=picked().map(x=>SVC.find(v=>v.id==x).name);
+  const d=await api('/api/bookings',{method:'POST',body:JSON.stringify({room_id:cur.id,guest_name:name,phone,check_in:$('in').value,check_out:$('out').value,services:picked()})});
+  $('bf').classList.add('hide');$('done').classList.remove('hide');
+  const gn=+$('sp').value,days=Math.round((new Date($('in').value+'T00:00:00')-new Date(new Date().toDateString()))/86400000),nights=d.nights,svcs=picked().map(x=>SVC.find(v=>v.id==x)),roomChg=d.total-d.services_total,fd=x=>new Date(x+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  $('cdn').innerHTML=days>0?`<div class="cdn">Your stay starts in ${days} day${days>1?'s':''}</div>`:days==0?'<div class="cdn">Your stay starts today. Welcome!</div>':'';$('rId').textContent='#'+d.booking_id;$('rDate').textContent=new Date().toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'});
+  $('doneTxt').innerHTML=`<table><tr><th>Guest</th><td>${esc(name)}</td></tr><tr><th>Phone</th><td>${esc(phone)}</td></tr><tr><th>Room</th><td>Room ${esc(cur.room_number)} (${esc(cur.type)}), sleeps ${cur.capacity}</td></tr><tr><th>Check-in</th><td>${fd($('in').value)}</td></tr><tr><th>Check-out</th><td>${fd($('out').value)}</td></tr><tr><th>Duration</th><td>${nights} night${nights>1?'s':''}</td></tr></table>
+  <div class="sub">CHARGES</div><table><tr><td>Room (${nights} night${nights>1?'s':''}, dynamic rate)</td><td class="r">${rs(roomChg)}</td></tr>${svcs.map(v=>`<tr><td>${esc(v.name)}</td><td class="r">${rs(v.price)}</td></tr>`).join('')}<tr class="tt"><th>Total payable</th><th class="r">${rs(d.total)}</th></tr>${gn>1?`<tr><td>Split between ${gn} guests</td><td class="r"><b>${rs(Math.ceil(d.total/gn))} each</b></td></tr>`:''}</table>`;
+  $('qr').innerHTML='';
+  if(typeof QRCode!='undefined')new QRCode($('qr'),{text:String(d.booking_id),width:140,height:140});
+  else $('qr').textContent='The QR library could not load. Check your internet connection.';
+  render();drawMap()
+ }catch(e){alert(e.message)}}
+
+/* ---------- reviews ---------- */
+async function loadReviews(){
+ await render();
+ $('rvRoom').innerHTML=allRooms.map(r=>`<option value="${r.id}">Room ${esc(r.room_number)}</option>`).join('');
+ const l=await api('/api/reviews');
+ $('rvList').innerHTML=l.length?l.map(v=>`<p><b>${esc(v.guest_name)}</b> on Room ${esc(v.room_number)}: ★ ${v.rating}<br>${esc(v.comment)}</p>`).join(''):'<p>No reviews yet.</p>'}
+async function sendReview(){
+ try{const d=await api('/api/reviews',{method:'POST',body:JSON.stringify({room_id:+$('rvRoom').value,booking_id:+$('rvBid').value,phone:$('rvPhone').value,rating:+$('rvStars').value,comment:$('rvText').value})});
+  alert(d.message);$('rvText').value='';loadReviews()
+ }catch(e){alert(e.message)}}
+
+/* ---------- admin ---------- */
+function login(){api('/api/admin/login',{method:'POST',body:JSON.stringify({username:$('au').value,password:$('ap').value})})
+ .then(d=>{tok=d.token;sessionStorage.setItem('tok',tok);$('ap').value='';adminInit()}).catch(e=>alert(e.message))}
+function logout(){tok='';sessionStorage.removeItem('tok');adminInit()}
+function adminInit(){$('login').classList.toggle('hide',!!tok);$('panel').classList.toggle('hide',!tok);if(tok)tab('dash')}
+function tab(n){['dash','desk','books','rooms','revs'].forEach(t=>$('t-'+t).classList.toggle('hide',t!=n));
+ ({dash,books,rooms:adminRooms,revs:adminRevs}[n]||(()=>{}))()}
+
+async function dash(){
+ const [bk,rm]=await Promise.all([api('/api/bookings'),api('/api/rooms')]);
+ const act=bk.filter(b=>b.status=='confirmed'),rev=act.reduce((s,b)=>s+b.total,0),inH=act.filter(b=>b.stage=='checked_in').length;
+ $('stats').innerHTML=[['Bookings',act.length],['Revenue',rs(rev)],['Guests in house',inH],['Occupancy now',rm.length?Math.round(inH/rm.length*100)+'%':'0%']].map(([a,b])=>`<div class="card">${a}<div class="stat">${b}</div></div>`).join('');
+ const mon={},rt={};act.forEach(b=>{const k=b.check_in.slice(0,7);mon[k]=(mon[k]||0)+b.total;rt[b.type]=(rt[b.type]||0)+1});
+ const ks=Object.keys(mon).sort();
+ if(typeof Chart!='undefined'){c1&&c1.destroy();c2&&c2.destroy();
+  c1=new Chart($('c1'),{type:'bar',data:{labels:ks,datasets:[{label:'Revenue (Rs)',data:ks.map(k=>mon[k]),backgroundColor:'#c8963e',borderRadius:8}]},options:{maintainAspectRatio:false}});
+  c2=new Chart($('c2'),{type:'doughnut',data:{labels:Object.keys(rt),datasets:[{data:Object.values(rt),backgroundColor:['#0f1f3d','#1c3a6b','#c8963e','#e8b960']}]},options:{maintainAspectRatio:false}})}
+ $('tbl').innerHTML='<tr><th>ID</th><th>Guest</th><th>Room</th><th>Stay</th><th>Total</th><th>Status</th></tr>'+
+ bk.slice(0,10).map(b=>`<tr><td>${b.id}</td><td>${esc(b.guest_name)}</td><td>${esc(b.room_number)}</td><td>${b.check_in} to ${b.check_out}</td><td>${rs(b.total)}</td><td><span class="tag">${stage(b)}</span></td></tr>`).join('')}
+
+async function lookup(){
+ const o=$('res');o.classList.remove('hide');
+ try{const b=await api('/api/bookings/'+encodeURIComponent($('bid').value.trim()));
+  const next=b.status=='confirmed'?(b.stage=='booked'?'Check in guest':b.stage=='checked_in'?'Check out guest':''):'';
+  o.innerHTML=`<table><tr><th>Guest</th><td>${esc(b.guest_name)}</td></tr><tr><th>Room</th><td>${esc(b.room_number)} (${esc(b.type)})</td></tr><tr><th>Stay</th><td>${b.check_in} to ${b.check_out}</td></tr><tr><th>Services</th><td>${esc(b.services||'None')}</td></tr><tr><th>Total</th><td>${rs(b.total)}</td></tr><tr><th>Status</th><td><span class="tag">${stage(b)}</span></td></tr></table><br>`+
+  (next?`<button class="btn" onclick="advance(${b.id})">${next}</button>`:'')
+ }catch(e){o.innerHTML='<p>'+esc(e.message)+'</p>'}}
+async function advance(id){try{await api(`/api/bookings/${id}/stage`,{method:'PUT'});lookup()}catch(e){alert(e.message)}}
+
+async function books(){
+ const bk=await api('/api/bookings');
+ $('allB').innerHTML='<tr><th>ID</th><th>Guest</th><th>Phone</th><th>Room</th><th>Stay</th><th>Services</th><th>Total</th><th>Status</th><th></th></tr>'+
+ bk.map(b=>`<tr><td>${b.id}</td><td>${esc(b.guest_name)}</td><td>${esc(b.phone)}</td><td>${esc(b.room_number)}</td><td>${b.check_in} to ${b.check_out}</td><td>${esc(b.services||'-')}</td><td>${rs(b.total)}</td><td><span class="tag">${stage(b)}</span></td><td>${b.status=='confirmed'&&b.stage=='booked'?`<button class="btn sm" onclick="cancelB(${b.id})">Cancel</button>`:''}</td></tr>`).join('')}
+async function cancelB(id){if(confirm('Cancel this booking?')){await api(`/api/bookings/${id}/cancel`,{method:'PUT'});books()}}
+
+async function adminRooms(){
+ const r=await api('/api/rooms');
+ $('rl').innerHTML='<tr><th>Room</th><th>Type</th><th>Price</th><th>Capacity</th><th></th></tr>'+
+ r.map(x=>`<tr><td>${esc(x.room_number)}</td><td>${esc(x.type)}</td><td>${rs(x.price)}</td><td>${x.capacity}</td><td><button class="btn sm" onclick="delRoom(${x.id})">Delete</button></td></tr>`).join('')}
+async function addRoom(){
+ try{await api('/api/rooms',{method:'POST',body:JSON.stringify({room_number:$('rn').value.trim(),type:$('rt').value.trim(),price:+$('rp').value,capacity:+$('rc').value})});
+  ['rn','rt','rp','rc'].forEach(i=>$(i).value='');adminRooms();render()
+ }catch(e){alert(e.message)}}
+async function delRoom(id){if(confirm('Delete this room and its bookings?')){await api('/api/rooms/'+id,{method:'DELETE'});adminRooms();render()}}
+
+async function adminRevs(){
+ const l=await api('/api/reviews');
+ $('rvAdmin').innerHTML='<tr><th>Guest</th><th>Room</th><th>Rating</th><th>Comment</th><th></th></tr>'+
+ l.map(v=>`<tr><td>${esc(v.guest_name)}</td><td>${esc(v.room_number)}</td><td>${v.rating}</td><td>${esc(v.comment)}</td><td><button class="btn sm" onclick="delRev(${v.id})">Delete</button></td></tr>`).join('')}
+async function delRev(id){if(confirm('Delete this review?')){await api('/api/reviews/'+id,{method:'DELETE'});adminRevs()}}
+
+function show(id,scroll){
+ ['home','reviews','admin'].forEach(s=>$(s).classList.toggle('hide',s!=id));
+ if(id=='admin')adminInit();
+ if(id=='reviews')loadReviews();
+ if(scroll)$('rooms').scrollIntoView({behavior:'smooth',block:'center'});else window.scrollTo(0,0)}
+
+/* ---------- Live Hotel Map ---------- */
+const ROOF='<svg class="roof" viewBox="0 -34 300 154" aria-hidden="true"><g fill="#2c5282"><rect x="110" y="40" width="80" height="80"/><path d="M118 44 C118 8 140 -2 150 -2 C160 -2 182 8 182 44 Z" fill="#3a66a8"/><rect x="148" y="-22" width="4" height="22" fill="#e8b960"/><rect x="40" y="52" width="14" height="68" rx="3"/><rect x="246" y="52" width="14" height="68" rx="3"/><path d="M37 52 C37 32 57 32 57 52 Z"/><path d="M243 52 C243 32 263 32 263 52 Z"/><rect x="54" y="92" width="56" height="28"/><rect x="190" y="92" width="56" height="28"/></g><circle cx="150" cy="-18" r="5" fill="#e8b960"/></svg>';
+async function drawMap(){
+ const d=$('md').value||iso(new Date());
+ try{
+  if(!allRooms.length)allRooms=await api('/api/rooms');
+  const free=new Set((await api(`/api/rooms?checkin=${d}&checkout=${addDay(d)}`)).map(r=>r.id));
+  const fl={};allRooms.forEach(r=>{const f=parseInt(String(r.room_number).trim()[0])||1;(fl[f]=fl[f]||[]).push(r)});
+  let n=0;
+  $('bld').innerHTML=ROOF+Object.keys(fl).map(Number).sort((a,b)=>b-a).map(f=>`<div class="flr"><div class="fl">Floor ${f}</div><div class="fr">`+fl[f].map(r=>{
+   const on=free.has(r.id);if(on)n++;
+   return on?`<div class="win on" style="--i:${n}" onclick="bookDeal(${r.id},'${d}','${addDay(d)}')" title="Click to book"><b>${esc(r.room_number)}</b>${esc(r.type)}<br>${rs(r.price)}</div>`
+    :`<div class="win off"><b>${esc(r.room_number)}</b>${esc(r.type)}<br>Booked</div>`}).join('')+'</div></div>').join('')+'<div class="gnd"><i></i></div>';
+  $('mcount').textContent=n+' of '+allRooms.length+' rooms free on this night'
+ }catch(e){$('bld').innerHTML='<p class="mut">'+esc(e.message)+'</p>'}}
+
+/* ---------- Deal Finder ---------- */
+const calCache={};
+async function findDeals(){
+ const n=+$('dn').value,g=+$('dg').value,box=$('deals');
+ box.innerHTML='<p class="mut">Scanning all rooms...</p>';
+ try{
+  if(!allRooms.length)allRooms=await api('/api/rooms');
+  const rooms=allRooms.filter(r=>r.capacity>=g);
+  if(!rooms.length){box.innerHTML='<p class="mut">No room sleeps '+g+' guests.</p>';return}
+  const found=[];
+  await Promise.all(rooms.map(async r=>{
+   const c=calCache[r.id]||(calCache[r.id]=await api('/api/calendar?room_id='+r.id));
+   let best=null;
+   for(let i=0;i+n<=c.length;i++){const w=c.slice(i,i+n);if(w.some(x=>x.booked))continue;
+    const t=w.reduce((s,x)=>s+x.price,0);if(!best||t<best.t)best={t,from:w[0].date,to:addDay(w[n-1].date)}}
+   if(best)found.push({r,...best})}));
+  found.sort((a,b)=>a.t-b.t);
+  const fd=d=>new Date(d+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'});
+  box.innerHTML=found.length?found.slice(0,3).map((x,i)=>`<div class="dc ${i==0?'top':''}" style="--i:${i}">${i==0?'<span class="bd">Best deal</span><br>':''}<b>Room ${esc(x.r.room_number)}</b> <span class="mut">${esc(x.r.type)}, sleeps ${x.r.capacity}</span>
+   <p style="margin:8px 0 2px">${fd(x.from)} to ${fd(x.to)}</p><p style="margin:0 0 10px"><b class="p">${rs(x.t)}</b> <span class="mut">approx. for ${n} night${n>1?'s':''}</span></p>
+   <button class="btn sm gold" onclick="bookDeal(${x.r.id},'${x.from}','${x.to}')">Book this deal</button></div>`).join(''):'<p class="mut">No free dates found. Try fewer nights.</p>'
+ }catch(e){box.innerHTML='<p class="mut">'+esc(e.message)+'</p>'}}
+function bookDeal(id,a,b){$('sin').value=a;$('sout').value=b;openBook(id)}
+
+/* ---------- Bello the chatbot ---------- */
+async function reply(t){t=t.toLowerCase();
+ if(!allRooms.length)allRooms=await api('/api/rooms');
+ if(/\bhi\b|hello|salam|assalam|hey/.test(t))return 'Hello! I am Bello, your Taj Mahal bellboy. Ask me about rooms, prices, services or timings. Roman Urdu bhi chalta hai!';
+ if(/price|rate|cost|charge|rent|kiraya|qeemat|kitna|kitne|paisay|paise/.test(t))return 'Base rates per night:\n'+allRooms.map(r=>'Room '+r.room_number+' ('+r.type+'): '+rs(r.price)).join('\n')+'\nRates go up on weekends and in peak season (Dec, Jan, Jun). Booking 30 or more days ahead gets a 10% discount. Tip: the price calendar in the booking window shows the cheapest night!';
+ if(/available|vacant|free|khali|khaali/.test(t)){const a=iso(new Date()),n=new Date();n.setDate(n.getDate()+1);
+  const f=await api(`/api/rooms?checkin=${a}&checkout=${iso(n)}`);
+  return f.length?'Rooms available tonight: '+f.map(r=>r.room_number+' ('+r.type+')').join(', '):'No rooms are available tonight.'}
+ if(/recommend|suggest|suitable|konsa|kaunsa|kon sa|family|couple|solo|akela|akele|\d+\s*(people|person|persons|guests|log|bande|bandon|adults)|for \d/.test(t)){
+  let n=+(t.match(/(\d+)/)||[])[1]||2;
+  if(/family/.test(t))n=Math.max(n,3);else if(/couple/.test(t))n=2;else if(/solo|akela|akele/.test(t))n=1;
+  const fit=allRooms.filter(r=>r.capacity>=n).sort((a,b)=>a.price-b.price);
+  return fit.length?'For '+n+' guest'+(n>1?'s':'')+' I suggest Room '+fit[0].room_number+' ('+fit[0].type+') at '+rs(fit[0].price)+' per night.'+(fit[1]?'\nOr go bigger with Room '+fit[1].room_number+' ('+fit[1].type+') at '+rs(fit[1].price)+'.':''):'Sorry, no room sleeps '+n+' guests.'}
+ if(/service|breakfast|laundry|pickup|extra/.test(t))return 'Extra services for your whole stay:\n'+SVC.map(s=>s.name+': '+rs(s.price)).join('\n');
+ if(/check.?in|check.?out|timing|time|waqt/.test(t))return 'Check-in starts at 2:00 PM and check-out is until 12:00 PM. Early check-in depends on availability.';
+ if(/wifi|parking|facilit/.test(t))return 'Free WiFi, secure parking, 24/7 room service and air conditioning in every room.';
+ if(/review|rating/.test(t))return 'Open the Reviews page and enter your booking ID and phone number to rate your room.';
+ if(/book|reserve|booking/.test(t))return 'On the home page, choose your dates, click "Book now" on a room, pick any extra services and confirm. You will receive a QR code and a printable receipt.';
+ if(/cancel|refund/.test(t))return 'To cancel a booking, please contact the reception with your booking ID.';
+ if(/qr|scan/.test(t))return 'You get a QR code when your booking is confirmed. Show it at the reception for a quick check-in.';
+ if(/thank|shukriya|shukria/.test(t))return 'You are welcome! Happy to help. *dances*';
+ return 'Sorry, I did not understand that. Try asking about prices, available rooms, a room for your group, services or timings.'}
+const QUICK=['Prices','Available tonight','Recommend a room for 3','Services','Timings'];
+$('chips').innerHTML=QUICK.map(q=>`<button type="button" onclick="ask('${q}')">${q}</button>`).join('');
+function add(c,t){const d=document.createElement('div');d.className='m '+c;d.textContent=t;$('msgs').appendChild(d);$('msgs').scrollTop=1e9;return d}
+function ask(t){add('me',t);const dots=document.createElement('div');dots.className='m bot dots';dots.innerHTML='<span></span><span></span><span></span>';$('msgs').appendChild(dots);$('msgs').scrollTop=1e9;
+ $('mw').classList.add('talking');
+ setTimeout(()=>reply(t).then(x=>{dots.remove();add('bot',x)}).catch(()=>{dots.remove();add('bot','Sorry, I could not reach the server.')}).finally(()=>setTimeout(()=>$('mw').classList.remove('talking'),1400)),650)}
+function send(){const t=$('cin').value.trim();if(!t)return false;$('cin').value='';ask(t);return false}
+function toggleChat(){const b=$('bub');if(b)b.remove();$('chat').classList.toggle('hide')}
+add('bot','Hello! I am Bello, your Taj Mahal bellboy. How can I help you today?');
+setTimeout(()=>{const b=$('bub');if(b)b.style.display='none'},9000);
+
+$('sin').min=$('sout').min=$('md').min=iso(new Date());$('md').value=iso(new Date());
+drawMoods();drawMap();
+api('/api/services').then(s=>SVC=s).catch(()=>{});
+render();
+</script>
+</body></html>

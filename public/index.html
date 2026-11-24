@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StayEase</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Taj Mahal</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{--bg:#f7f4ee;--card:#fff;--ink:#17202e;--mut:#6c7684;--pri:#0f1f3d;--pri2:#1c3a6b;--gold:#c8963e;--gold2:#e8b960;--bd:#e6e1d6;--ok:#2e9e6b;--warn:#e0a030;--hot:#d9604c;--sh:0 6px 24px rgba(15,31,61,.09)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:"Plus Jakarta Sans","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
-h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+h1,h2,h3,h4{font-family:inherit}
 header{position:sticky;top:0;z-index:30;background:rgba(15,31,61,.93);backdrop-filter:blur(10px);color:#fff;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px}
-header h1{font-size:28px;margin:0;letter-spacing:.3px}header h1 span{color:var(--gold2)}
+header h1{font-size:28px;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px}header h1 b{font-weight:700}header h1 span{color:var(--gold2)}
 nav a{color:#e9edf5;font-weight:600;margin-left:6px;cursor:pointer;padding:9px 16px;border-radius:30px;font-size:15px;transition:.2s;display:inline-block}
 nav a:hover{background:rgba(255,255,255,.12);color:#fff}
-.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:96px 20px 150px;background:linear-gradient(135deg,#0b1830 0%,#173463 55%,#2a4f86 100%)}
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:90px 20px 300px;background:linear-gradient(135deg,#0b1830 0%,#173463 55%,#2a4f86 100%)}
 .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at 50% 40%,#000 20%,transparent 75%)}
 .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:float 9s ease-in-out infinite}
 .b1{width:340px;height:340px;background:#c8963e;left:-80px;top:-60px}
 .b2{width:300px;height:300px;background:#3b82f6;right:-60px;bottom:-40px;animation-delay:-4s}
 .b3{width:200px;height:200px;background:#e8b960;right:25%;top:-70px;animation-delay:-2s;opacity:.3}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-26px)}}
-.hero>*{position:relative}
+.hero>*{position:relative}.hero .taj{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(780px,96%);height:auto;pointer-events:none}
 .pill{display:inline-block;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:600;margin-bottom:20px}
 .hero h2{font-size:clamp(34px,6vw,64px);line-height:1.08;margin:0 auto 16px;max-width:820px}
 .hero h2 em{font-style:normal;color:var(--gold2)}
 .hero p{font-size:19px;margin:0 auto;max-width:560px;color:#d5def0}
 .hstats{display:flex;justify-content:center;gap:44px;margin-top:38px;flex-wrap:wrap}
-.hstats b{display:block;font-family:"Fraunces",serif;font-size:34px;color:var(--gold2)}.hstats span{font-size:14px;color:#c4d0e6}
+.hstats b{display:block;font-size:34px;color:var(--gold2)}.hstats span{font-size:14px;color:#c4d0e6}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
 .search{margin:-74px auto 0;position:relative;z-index:2}
 .card{background:var(--card);border-radius:20px;padding:26px;box-shadow:var(--sh);margin:20px 0;border:1px solid rgba(230,225,214,.7)}
@@ -53,7 +52,7 @@ input:focus,select:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px
 .rc:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(15,31,61,.18)}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .rv{position:relative;height:150px;display:flex;align-items:center;justify-content:center;color:#fff;overflow:hidden}
-.rv::after{content:attr(data-n);position:absolute;right:14px;bottom:-26px;font-family:"Fraunces",serif;font-size:96px;font-weight:700;opacity:.14}
+.rv::after{content:attr(data-n);position:absolute;right:14px;bottom:-26px;font-size:96px;font-weight:700;opacity:.14}
 .g1{background:linear-gradient(135deg,#1f8a8a,#2bb3a0)}.g2{background:linear-gradient(135deg,#25508f,#4a86d6)}.g3{background:linear-gradient(135deg,#5a3d8f,#8f6bd0)}.g4{background:linear-gradient(135deg,#9a6a1a,#e0a838)}
 .rv svg{width:78px;fill:rgba(255,255,255,.92);transition:.4s}.rc:hover .rv svg{transform:scale(1.12) rotate(-3deg)}
 .rv .tag{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(4px);font-weight:600}
@@ -65,7 +64,7 @@ input:focus,select:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px
 .tag{padding:4px 11px;border-radius:12px;font-size:13px;background:var(--bd);font-weight:600;display:inline-block}.tag.no{background:#fde2e2;color:#a02020}
 table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 8px;border-bottom:1px solid var(--bd);text-align:left}th{color:#4b5565}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.stat{font-size:32px;font-weight:700;color:var(--pri2);font-family:"Fraunces",serif}.total{font-size:22px;font-weight:700;color:var(--pri2)}
+.stat{font-size:32px;font-weight:700;color:var(--pri2)}.total{font-size:22px;font-weight:700;color:var(--pri2)}
 .box{position:relative;height:260px}.hide{display:none!important}
 .modal{position:fixed;inset:0;background:rgba(10,18,36,.55);backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;padding:24px 14px;z-index:60;overflow:auto}
 .modal .card{animation:rise .35s both}
@@ -75,8 +74,19 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 8px;b
 .cd.lo{background:#dff3e8;color:#1c6b45}.cd.mid{background:#fdf0d2;color:#8a5d09}.cd.hi{background:#fbdcd6;color:#9a3426}
 .cd.bk{background:#eee;color:#aaa;text-decoration:line-through;cursor:not-allowed}.cd.best{border-color:var(--gold)}.cd.sel{outline:3px solid var(--pri)}
 .leg{font-size:12px;color:var(--mut);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
-.rcpt{border:2px dashed var(--bd);border-radius:14px;padding:16px;margin:12px 0}.rcpt h4{margin:0 0 8px;font-size:20px}
-footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;margin-top:40px;font-size:14px}footer b{color:#fff;font-family:"Fraunces",serif;font-size:22px}
+.deal{border-top:4px solid var(--gold)}.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+.dc{border:1.5px solid var(--bd);border-radius:16px;padding:16px;background:#fffdf8;animation:rise .5s both;animation-delay:calc(var(--i)*90ms)}
+.dc.top{border-color:var(--gold);background:linear-gradient(180deg,#fff8e8,#fffdf8)}.dc b.p{font-size:22px;color:var(--pri2)}
+.dc .bd{display:inline-block;background:var(--gold2);color:#3b2704;font-weight:700;font-size:12px;border-radius:20px;padding:3px 10px;margin-bottom:8px}
+.rcpt{background:#fff;border:1px solid var(--bd);border-top:6px solid var(--gold);border-radius:14px;padding:22px;margin:4px 0 14px}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--bd);padding-bottom:12px;margin-bottom:12px}
+.rl{display:flex;align-items:center;gap:8px;font-size:22px;color:var(--pri)}.rt{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--mut)}
+.rmeta{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:12px}.rmeta span{display:block;font-size:12px;color:var(--mut)}.rmeta b{font-size:16px}
+.rcpt table th{width:36%;color:var(--mut);font-weight:600}.rcpt .sub{margin:16px 0 4px;font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--mut)}
+.rcpt td.r,.rcpt th.r{text-align:right}.rcpt tr.tt td,.rcpt tr.tt th{background:#fff6e0;font-size:18px;color:var(--pri);border-bottom:0}
+.rq{display:flex;gap:16px;align-items:center;margin-top:16px;flex-wrap:wrap}.rq p{margin:0;flex:1;min-width:180px;font-size:13px;color:var(--mut);line-height:1.6}
+.rf{margin-top:16px;padding-top:12px;border-top:1px dashed var(--bd);text-align:center;font-size:13px;color:var(--mut)}
+footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;margin-top:40px;font-size:14px}footer b{color:#fff;font-size:22px}
 /* mascot */
 #mw{position:fixed;right:14px;bottom:6px;z-index:40;width:112px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #mw svg{width:100%;display:block;overflow:visible}
@@ -111,25 +121,44 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 @keyframes dt{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 #chat form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--bd);background:#faf8f3}
 #chat form input{padding:10px 12px}
-@media(max-width:700px){header{padding:0 14px}nav a{padding:8px 10px;font-size:14px}.hstats{gap:24px}#mw{width:84px}#bub{right:72px;bottom:88px;width:150px}#chat{bottom:128px;height:380px}.hero{padding:70px 16px 130px}}
+@media(max-width:700px){header{padding:0 14px}nav a{padding:8px 10px;font-size:14px}.hstats{gap:24px}#mw{width:84px}#bub{right:72px;bottom:88px;width:150px}#chat{bottom:128px;height:380px}.hero{padding:70px 16px 230px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
-@media print{body *{visibility:hidden}#done,#done *{visibility:visible}.modal{position:absolute;background:#fff;padding:0;display:block}#done .btn{display:none}}
+@media print{@page{margin:14mm}body *{visibility:hidden}#done,#done *{visibility:visible}.modal{position:absolute;inset:auto;left:0;top:0;width:100%;background:#fff;padding:0;display:block;backdrop-filter:none}.modal>.card{box-shadow:none;border:0;padding:0;margin:0;max-width:none!important}#done .btn{display:none}.rcpt{border:1px solid #ccc;border-top:6px solid #c8963e;max-width:560px;margin:0 auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style></head>
 <body>
-<header><h1>Stay<span>Ease</span></h1>
+<header><h1><svg viewBox="0 0 40 40" width="34" height="34" fill="#e8b960" aria-hidden="true"><path d="M20 3 L20 8"/><circle cx="20" cy="4.5" r="1.8"/><path d="M11 24 C11 14 16 9 20 9 C24 9 29 14 29 24 Z"/><rect x="9" y="24" width="22" height="10"/><rect x="3" y="14" width="3.6" height="20" rx="1.4"/><rect x="33.4" y="14" width="3.6" height="20" rx="1.4"/><path d="M3 14 Q4.8 9 6.6 14 Z"/><path d="M33.4 14 Q35.2 9 37 14 Z"/><rect x="1" y="34" width="38" height="3" rx="1"/></svg><b>Taj <span>Mahal</span></b></h1>
 <nav><a onclick="show('home')">Home</a><a onclick="show('home',1)">Rooms</a><a onclick="show('reviews')">Reviews</a><a onclick="show('admin')">Admin</a></nav></header>
 
 <div id="home">
-<div class="hero"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
-<span class="pill">&#10022; Smart prices &middot; Instant QR check-in</span>
-<h2>Stay somewhere you'll <em>remember</em></h2>
-<p>Comfortable rooms, honest prices and a bellboy who never stops dancing.</p>
+<div class="hero"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><svg class="taj" viewBox="0 -20 800 280" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><g fill="rgba(255,255,255,.13)">
+<rect x="60" y="238" width="680" height="22"/><rect x="130" y="228" width="540" height="12"/>
+<rect x="290" y="130" width="220" height="100"/>
+<path d="M310 135 C310 50 360 20 400 20 C440 20 490 50 490 135 Z"/>
+<path d="M300 130 C300 104 336 104 336 130 Z"/><path d="M464 130 C464 104 500 104 500 130 Z"/>
+<rect x="206" y="168" width="84" height="62"/><rect x="510" y="168" width="84" height="62"/>
+<path d="M206 168 C206 150 248 150 248 168 Z"/><path d="M552 168 C552 150 594 150 594 168 Z"/>
+<rect x="150" y="70" width="22" height="160" rx="3"/><rect x="628" y="70" width="22" height="160" rx="3"/>
+<path d="M146 70 C146 40 176 40 176 70 Z"/><path d="M624 70 C624 40 654 40 654 70 Z"/>
+<rect x="158" y="30" width="6" height="12"/><rect x="636" y="30" width="6" height="12"/>
+<rect x="397" y="-8" width="6" height="30"/></g>
+<path d="M370 230 V162 Q400 118 430 162 V230 Z" fill="rgba(0,0,0,.28)"/>
+<path d="M230 230 V190 Q248 174 266 190 V230 Z" fill="rgba(0,0,0,.22)"/><path d="M534 230 V190 Q552 174 570 190 V230 Z" fill="rgba(0,0,0,.22)"/>
+<circle cx="400" cy="-12" r="7" fill="#e8b960"/><circle cx="403" cy="-14" r="6" fill="#16315c"/></svg>
+<span class="pill">Smart prices &middot; Instant QR check-in</span>
+<h2>A palace of <em>comfort</em> awaits you</h2>
+<p>Elegant rooms, honest prices and a bellboy who never stops dancing.</p>
 <div class="hstats"><div><b id="hs1">0</b><span>Rooms</span></div><div><b id="hs2">-</b><span>Guest rating</span></div><div><b id="hs3">-</b><span>Rooms from / night</span></div></div></div>
 <div class="wrap">
 <div class="card search"><h3>Check availability</h3>
 <div class="row"><div><label>Check-in</label><input type="date" id="sin"></div>
 <div><label>Check-out</label><input type="date" id="sout"></div>
 <button class="btn gold" onclick="render(true)">Search</button><button class="btn ghost" onclick="clearS()">Show all</button></div></div>
+<div class="card deal"><h3>Deal Finder: cheapest stay in the next 30 days</h3>
+<p class="mut" style="margin:0 0 6px">Tell us how long and how many guests. We scan every room and every date for the lowest price.</p>
+<div class="row"><div><label>Nights</label><select id="dn"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>7</option></select></div>
+<div><label>Guests</label><select id="dg"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+<button class="btn gold" onclick="findDeals()">Find best deals</button></div>
+<div id="deals" class="dgrid"></div></div>
 <h2 class="sec-t">Find your perfect room</h2><p class="sec-s">Who is travelling? We'll show the rooms that fit.</p>
 <div class="moods" id="moods"></div>
 <div class="rooms" id="rooms"></div>
@@ -174,7 +203,7 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 <div id="t-revs" class="hide"><div class="card"><h3>All reviews</h3><div style="overflow-x:auto"><table id="rvAdmin"></table></div></div></div>
 </div></div>
 
-<footer><b>StayEase</b><br>Smart hotel booking &middot; Free WiFi &middot; 24/7 service</footer>
+<footer><b>Taj Mahal</b><br>Smart hotel booking &middot; Free WiFi &middot; 24/7 service</footer>
 
 <div id="modal" class="modal hide"><div class="card" style="max-width:600px;width:100%">
 <div id="bf"><h3 id="mt"></h3>
@@ -187,13 +216,18 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 <label>Extra services</label><div id="svc"></div>
 <div id="quote" style="margin:14px 0"></div>
 <button class="btn gold" onclick="confirmBook()">Confirm booking</button> <button class="btn ghost" onclick="closeM()">Cancel</button></div>
-<div id="done" class="hide"><div class="rcpt"><h4>&#10003; Booking confirmed</h4><div id="doneTxt"></div><div id="qr" style="margin:12px 0"></div>
-<p class="mut" style="margin:0">Show this QR code at the reception desk.</p></div>
-<button class="btn gold" onclick="window.print()">Print receipt</button> <button class="btn ghost" onclick="closeM()">Close</button></div>
+<div id="done" class="hide"><div class="rcpt" id="rcpt">
+<div class="rh"><div class="rl"><svg viewBox="0 0 40 40" width="30" height="30" fill="#c8963e" aria-hidden="true"><circle cx="20" cy="4.5" r="1.8"/><path d="M11 24 C11 14 16 9 20 9 C24 9 29 14 29 24 Z"/><rect x="9" y="24" width="22" height="10"/><rect x="3" y="14" width="3.6" height="20" rx="1.4"/><rect x="33.4" y="14" width="3.6" height="20" rx="1.4"/><path d="M3 14 Q4.8 9 6.6 14 Z"/><path d="M33.4 14 Q35.2 9 37 14 Z"/><rect x="1" y="34" width="38" height="3" rx="1"/></svg><b>Taj Mahal</b></div><div class="rt">BOOKING RECEIPT</div></div>
+<div class="rmeta"><div><span>Booking ID</span><b id="rId"></b></div><div><span>Issued on</span><b id="rDate"></b></div><div><span>Status</span><b style="color:#1c6b45">Confirmed</b></div></div>
+<div id="doneTxt"></div>
+<div class="rq"><div id="qr"></div><p>Show this QR code at the reception desk for quick check-in.<br>Check-in from 2:00 PM &middot; Check-out until 12:00 PM.<br>Keep your booking ID and phone number to write a review.</p></div>
+<div class="rf">Thank you for choosing Taj Mahal. We look forward to hosting you.</div>
+</div>
+<button class="btn gold" onclick="window.print()">Print / Save as PDF</button> <button class="btn ghost" onclick="closeM()">Close</button></div>
 </div></div>
 
 <div id="mw" onclick="toggleChat()" title="Chat with Bello">
-<div id="bub">Hi! I'm <b>Bello</b> &#128075; Ask me about rooms, prices or deals!</div>
+<div id="bub">Hi! I'm <b>Bello</b>. Ask me about rooms, prices or deals!</div>
 <svg viewBox="0 0 120 170" aria-label="Bello the dancing bellboy">
 <ellipse class="sh" cx="60" cy="164" rx="30" ry="5" fill="rgba(0,0,0,.2)"/>
 <g class="dancer">
@@ -211,7 +245,7 @@ footer{background:var(--pri);color:#aebbd4;text-align:center;padding:34px 20px;m
 <rect x="36" y="9" width="48" height="19" rx="7" fill="#8c2f39"/><rect x="36" y="21" width="48" height="5" fill="#c8963e"/><circle cx="60" cy="9" r="4" fill="#e8b960"/>
 </g></svg></div>
 
-<div id="chat" class="hide"><h4>Bello &middot; StayEase assistant <span onclick="event.stopPropagation();toggleChat()">&#10005;</span></h4><div id="msgs"></div>
+<div id="chat" class="hide"><h4>Bello &middot; Taj Mahal assistant <span onclick="event.stopPropagation();toggleChat()">&#10005;</span></h4><div id="msgs"></div>
 <div class="chips" id="chips"></div>
 <form onsubmit="return send()"><input id="cin" placeholder="Ask in English or Roman Urdu..." autocomplete="off"><button class="btn sm">Send</button></form></div>
 
@@ -234,11 +268,11 @@ const stage=b=>b.status=='cancelled'?'Cancelled':b.stage.replace('_','-');
 
 /* ---------- mood filter ---------- */
 const MOODS={
- all:{label:'✨ All rooms',fn:()=>true},
- solo:{label:'\u{1F9F3} Solo',fn:r=>r.capacity<=1||/single/i.test(r.type)},
- couple:{label:'\u{1F495} Couple',fn:r=>r.capacity==2||/double/i.test(r.type)},
- family:{label:'\u{1F46A} Family',fn:r=>r.capacity>=3},
- luxury:{label:'\u{1F451} Luxury',fn:r=>/suite|deluxe/i.test(r.type)||r.price>=12000}};
+ all:{label:'All rooms',fn:()=>true},
+ solo:{label:'Solo',fn:r=>r.capacity<=1||/single/i.test(r.type)},
+ couple:{label:'Couple',fn:r=>r.capacity==2||/double/i.test(r.type)},
+ family:{label:'Family',fn:r=>r.capacity>=3},
+ luxury:{label:'Luxury',fn:r=>/suite|deluxe/i.test(r.type)||r.price>=12000}};
 function drawMoods(){$('moods').innerHTML=Object.entries(MOODS).map(([k,v])=>`<button class="mood ${k==mood?'on':''}" onclick="setMood('${k}')">${v.label}</button>`).join('')}
 function setMood(k){mood=k;drawMoods();render()}
 
@@ -305,7 +339,10 @@ async function confirmBook(){
  try{const sv=picked().map(x=>SVC.find(v=>v.id==x).name);
   const d=await api('/api/bookings',{method:'POST',body:JSON.stringify({room_id:cur.id,guest_name:name,phone,check_in:$('in').value,check_out:$('out').value,services:picked()})});
   $('bf').classList.add('hide');$('done').classList.remove('hide');
-  $('doneTxt').innerHTML=`<table><tr><th>Booking ID</th><td><b>${d.booking_id}</b></td></tr><tr><th>Guest</th><td>${esc(name)} (${esc(phone)})</td></tr><tr><th>Room</th><td>${esc(cur.room_number)} (${esc(cur.type)})</td></tr><tr><th>Stay</th><td>${$('in').value} to ${$('out').value} (${d.nights} night${d.nights>1?'s':''})</td></tr><tr><th>Services</th><td>${sv.length?esc(sv.join(', ')):'None'}</td></tr><tr><th>Total</th><td><b>${rs(d.total)}</b></td></tr></table><p class="mut" style="font-size:13px">Keep your booking ID and phone number to write a review.</p>`;
+  const nights=d.nights,svcs=picked().map(x=>SVC.find(v=>v.id==x)),roomChg=d.total-d.services_total,fd=x=>new Date(x+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  $('rId').textContent='#'+d.booking_id;$('rDate').textContent=new Date().toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'});
+  $('doneTxt').innerHTML=`<table><tr><th>Guest</th><td>${esc(name)}</td></tr><tr><th>Phone</th><td>${esc(phone)}</td></tr><tr><th>Room</th><td>Room ${esc(cur.room_number)} (${esc(cur.type)}), sleeps ${cur.capacity}</td></tr><tr><th>Check-in</th><td>${fd($('in').value)}</td></tr><tr><th>Check-out</th><td>${fd($('out').value)}</td></tr><tr><th>Duration</th><td>${nights} night${nights>1?'s':''}</td></tr></table>
+  <div class="sub">CHARGES</div><table><tr><td>Room (${nights} night${nights>1?'s':''}, dynamic rate)</td><td class="r">${rs(roomChg)}</td></tr>${svcs.map(v=>`<tr><td>${esc(v.name)}</td><td class="r">${rs(v.price)}</td></tr>`).join('')}<tr class="tt"><th>Total payable</th><th class="r">${rs(d.total)}</th></tr></table>`;
   $('qr').innerHTML='';
   if(typeof QRCode!='undefined')new QRCode($('qr'),{text:String(d.booking_id),width:140,height:140});
   else $('qr').textContent='The QR library could not load. Check your internet connection.';
@@ -380,10 +417,34 @@ function show(id,scroll){
  if(id=='reviews')loadReviews();
  if(scroll)$('rooms').scrollIntoView({behavior:'smooth',block:'center'});else window.scrollTo(0,0)}
 
+/* ---------- Deal Finder ---------- */
+const calCache={};
+async function findDeals(){
+ const n=+$('dn').value,g=+$('dg').value,box=$('deals');
+ box.innerHTML='<p class="mut">Scanning all rooms...</p>';
+ try{
+  if(!allRooms.length)allRooms=await api('/api/rooms');
+  const rooms=allRooms.filter(r=>r.capacity>=g);
+  if(!rooms.length){box.innerHTML='<p class="mut">No room sleeps '+g+' guests.</p>';return}
+  const found=[];
+  await Promise.all(rooms.map(async r=>{
+   const c=calCache[r.id]||(calCache[r.id]=await api('/api/calendar?room_id='+r.id));
+   let best=null;
+   for(let i=0;i+n<=c.length;i++){const w=c.slice(i,i+n);if(w.some(x=>x.booked))continue;
+    const t=w.reduce((s,x)=>s+x.price,0);if(!best||t<best.t)best={t,from:w[0].date,to:addDay(w[n-1].date)}}
+   if(best)found.push({r,...best})}));
+  found.sort((a,b)=>a.t-b.t);
+  const fd=d=>new Date(d+'T00:00:00').toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'});
+  box.innerHTML=found.length?found.slice(0,3).map((x,i)=>`<div class="dc ${i==0?'top':''}" style="--i:${i}">${i==0?'<span class="bd">Best deal</span><br>':''}<b>Room ${esc(x.r.room_number)}</b> <span class="mut">${esc(x.r.type)}, sleeps ${x.r.capacity}</span>
+   <p style="margin:8px 0 2px">${fd(x.from)} to ${fd(x.to)}</p><p style="margin:0 0 10px"><b class="p">${rs(x.t)}</b> <span class="mut">approx. for ${n} night${n>1?'s':''}</span></p>
+   <button class="btn sm gold" onclick="bookDeal(${x.r.id},'${x.from}','${x.to}')">Book this deal</button></div>`).join(''):'<p class="mut">No free dates found. Try fewer nights.</p>'
+ }catch(e){box.innerHTML='<p class="mut">'+esc(e.message)+'</p>'}}
+function bookDeal(id,a,b){$('sin').value=a;$('sout').value=b;openBook(id)}
+
 /* ---------- Bello the chatbot ---------- */
 async function reply(t){t=t.toLowerCase();
  if(!allRooms.length)allRooms=await api('/api/rooms');
- if(/\bhi\b|hello|salam|assalam|hey/.test(t))return 'Hello! I am Bello, your StayEase bellboy. Ask me about rooms, prices, services or timings. Roman Urdu bhi chalta hai!';
+ if(/\bhi\b|hello|salam|assalam|hey/.test(t))return 'Hello! I am Bello, your Taj Mahal bellboy. Ask me about rooms, prices, services or timings. Roman Urdu bhi chalta hai!';
  if(/price|rate|cost|charge|rent|kiraya|qeemat|kitna|kitne|paisay|paise/.test(t))return 'Base rates per night:\n'+allRooms.map(r=>'Room '+r.room_number+' ('+r.type+'): '+rs(r.price)).join('\n')+'\nRates go up on weekends and in peak season (Dec, Jan, Jun). Booking 30 or more days ahead gets a 10% discount. Tip: the price calendar in the booking window shows the cheapest night!';
  if(/available|vacant|free|khali|khaali/.test(t)){const a=iso(new Date()),n=new Date();n.setDate(n.getDate()+1);
   const f=await api(`/api/rooms?checkin=${a}&checkout=${iso(n)}`);
@@ -410,7 +471,7 @@ function ask(t){add('me',t);const dots=document.createElement('div');dots.classN
  setTimeout(()=>reply(t).then(x=>{dots.remove();add('bot',x)}).catch(()=>{dots.remove();add('bot','Sorry, I could not reach the server.')}).finally(()=>setTimeout(()=>$('mw').classList.remove('talking'),1400)),650)}
 function send(){const t=$('cin').value.trim();if(!t)return false;$('cin').value='';ask(t);return false}
 function toggleChat(){const b=$('bub');if(b)b.remove();$('chat').classList.toggle('hide')}
-add('bot','Hello! I am Bello, your StayEase bellboy. How can I help you today?');
+add('bot','Hello! I am Bello, your Taj Mahal bellboy. How can I help you today?');
 setTimeout(()=>{const b=$('bub');if(b)b.style.display='none'},9000);
 
 $('sin').min=$('sout').min=iso(new Date());
